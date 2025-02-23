@@ -1,12 +1,11 @@
-import Header from "../../../components/Header";
 import * as S from "./PreRecommend.style";
 import { Image, View } from "react-native";
 import logo from "../../../assets/splashLogo.png";
+import { ScreenWrapper } from "../../../components";
 
 const PrevRecommendView = ({ navigation }: any) => {
   return (
-    <S.Container>
-      <Header />
+    <ScreenWrapper>
       <View
         style={{
           alignItems: "flex-end",
@@ -42,7 +41,7 @@ const PrevRecommendView = ({ navigation }: any) => {
           </S.ButtonText>
         </S.Button>
       </S.ButtonContainer>
-    </S.Container>
+    </ScreenWrapper>
   );
 };
 export default PrevRecommendView;

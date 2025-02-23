@@ -2,8 +2,9 @@ import Header from "../../components/Header";
 import { Image, View } from "react-native";
 import logo from "../../assets/splashLogo.png";
 import styled from "styled-components/native";
+import { ButtonCommon } from "../../components";
 
-const OnBoardingView = ({ navigation }: any) => {
+const OnBoardingView = () => {
   return (
     <Container>
       <Header />
@@ -32,13 +33,7 @@ const OnBoardingView = ({ navigation }: any) => {
       <Checklist>✔ 생활습관 체크</Checklist>
       <Checklist>✔ 건강 고민 확인</Checklist>
       <Checklist>✔ 현재 복용 영양제 입력</Checklist>
-      <ButtonContainer>
-        <Button>
-          <ButtonText onPress={() => navigation.navigate("SurveyView")}>
-            설문 시작하기
-          </ButtonText>
-        </Button>
-      </ButtonContainer>
+      <ButtonCommon text="설문 시작하기" navigateTo="SurveyView" />
     </Container>
   );
 };
@@ -63,18 +58,4 @@ const Checklist = styled.Text`
   font-size: 16px;
   margin-left: 10px;
   margin-bottom: 5px;
-`;
-const ButtonContainer = styled.View`
-  margin-top: 40px;
-`;
-const Button = styled.TouchableOpacity`
-  background-color: #f0f0f0;
-  padding: 15px;
-  border-radius: 10px;
-  margin-vertical: 10px;
-`;
-
-const ButtonText = styled.Text`
-  text-align: center;
-  font-size: 16px;
 `;

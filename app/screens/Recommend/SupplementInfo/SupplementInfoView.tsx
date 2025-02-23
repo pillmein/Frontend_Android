@@ -1,4 +1,4 @@
-import ButtonBack from "../../../components/ButtonBack";
+import ButtonBack from "../../../components/Button/ButtonBack";
 import Header from "../../../components/Header";
 import * as S from "./SupplementInfoView.style";
 
