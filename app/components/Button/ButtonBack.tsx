@@ -1,8 +1,6 @@
-import React from "react";
-import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { Ionicons } from "@expo/vector-icons"; // 아이콘 사용 (expo-vector-icons)
+import { Ionicons } from "@expo/vector-icons";
 
 const ButtonBack = () => {
   const navigation = useNavigation();
