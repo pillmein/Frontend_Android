@@ -50,13 +50,15 @@ const SupplementSearch = ({
       )}
 
       {confirmedSupplements.length > 0 && !isSearching && (
-        <S.ResultsButton
-          onPress={() => {
-            setIsSearching(true);
-          }}
-        >
-          <Text>영양제 추가하기</Text>
-        </S.ResultsButton>
+        <S.AddContainer>
+          <S.ResultsButton
+            onPress={() => {
+              setIsSearching(true);
+            }}
+          >
+            <Text>영양제 추가하기</Text>
+          </S.ResultsButton>
+        </S.AddContainer>
       )}
 
       {supplementInput ? (

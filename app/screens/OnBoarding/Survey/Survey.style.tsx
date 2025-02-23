@@ -247,11 +247,15 @@ export const ButtonText = styled.Text`
 `;
 
 export const ResultsButton = styled.TouchableOpacity`
-  width: 100px;
   background-color: #a5d6a730;
   padding: 3px;
   border-radius: 5px;
   align-items: center;
   border: 1px #d9d9d9;
   margin-top: 10px;
+`;
+
+export const AddContainer = styled.View`
+  flex: 1;
+  align-items: flex-end;
 `;
