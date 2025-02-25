@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeView from "../screens/Home/HomeView";
 import RecommendStack from "./RecommendStack"; // Recommend는 Stack 구조
-import ScanView from "../screens/Scan/ScanView";
+import ScanStack from "./ScanStack";
 import MyPageView from "../screens/MyPage/MyPageView";
 import {
   MaterialCommunityIcons,
@@ -50,7 +50,7 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Scan"
-        component={ScanView}
+        component={ScanStack}
         options={{
           title: "영양성분 스캔",
           tabBarIcon: (props) => (
