@@ -13,16 +13,41 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.homerunball.pillmein",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/splashLogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./app/assets/splashLogo.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "앨범 접근을 허용하시겠습니까?",
+          "cameraPermission": "카메라를 허용하시겠습니까?"
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps._some_id_here_"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9d18b12b-a391-40ca-af7f-54561f9a6be4"
+      }
     }
   }
 }
