@@ -7,8 +7,8 @@ export const Container = styled.View`
 `;
 
 export const InfoHeader = styled.View`
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   flex-direction: row;
   position: relative;
 `;
@@ -21,7 +21,7 @@ export const SupplementName = styled.Text`
 `;
 export const InfoSection = styled.View`
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 2px;
   padding: 8px;
   background-color: #eff5ec;
   border-radius: 10px;
