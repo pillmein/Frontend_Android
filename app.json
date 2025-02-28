@@ -16,7 +16,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.homerunball.pillmein",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.201204192076-hkvou9c737ffk4etucb74mf2fdq2mpov"
+            ]
+          }
+        ]
       }
     },
     "android": {
