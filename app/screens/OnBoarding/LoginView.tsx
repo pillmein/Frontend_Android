@@ -1,8 +1,35 @@
-import { Image, View, Text } from "react-native";
+import { Image, View } from "react-native";
 import logo from "../../assets/splashLogo.png";
 import styled from "styled-components/native";
+import {
+  GoogleSigninButton,
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+import { GOOGLE_WEB_CLIENT_ID, GOOGLE_IOS_CLIENT_ID } from "@env";
 
-const OnBoardingView = () => {
+const LoginView = ({ navigation }: any) => {
+  GoogleSignin.configure({
+    webClientId: GOOGLE_WEB_CLIENT_ID,
+    iosClientId: GOOGLE_IOS_CLIENT_ID,
+    offlineAccess: true, // refresh token 받기
+  });
+
+  const signin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log("로그인 성공:", userInfo);
+      navigation.navigate("OnBoardingView");
+    } catch (error: any) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log("사용자가 로그인 취소");
+      } else {
+        console.error("로그인 실패:", error);
+      }
+    }
+  };
+
   return (
     <Container>
       <View
@@ -37,13 +64,16 @@ const OnBoardingView = () => {
       <Description>
         올바른 영양제 조합, 복용까지 완벽하게 !{"\n"}당신만의 영양제 큐레이터
       </Description>
-      <LoginButton>
-        <Text>로그인 하기</Text>
-      </LoginButton>
+      <LoginContainer>
+        <GoogleSigninButton
+          size={GoogleSigninButton.Size.Wide}
+          onPress={signin}
+        />
+      </LoginContainer>
     </Container>
   );
 };
-export default OnBoardingView;
+export default LoginView;
 
 const Container = styled.View`
   flex: 1;
@@ -59,9 +89,8 @@ const Description = styled.Text`
   margin-right: 15px;
   margin-bottom: 35px;
 `;
-const LoginButton = styled.TouchableOpacity`
-  border: 1px #d9d9d9;
-  padding: 15px;
-  border-radius: 10px;
-  margin-vertical: 10px;
+const LoginContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
