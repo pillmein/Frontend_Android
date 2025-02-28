@@ -18,6 +18,7 @@ const ScanView = ({ navigation }: any) => {
     }
   };
 
+<<<<<<< Updated upstream
   const scanImages = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -37,6 +38,8 @@ const ScanView = ({ navigation }: any) => {
     }
   };
 
+=======
+>>>>>>> Stashed changes
   return (
     <ScreenWrapper>
       <ScanContainer>
@@ -49,7 +52,11 @@ const ScanView = ({ navigation }: any) => {
             어렵기만 했던 영양 성분,{`\n`}쉽고 간편하게 설명해 드려요.
           </ScanLabel>
         </LabelContainer>
+<<<<<<< Updated upstream
         <SelectContainer onPress={scanImages}>
+=======
+        <SelectContainer onPress={() => navigation.navigate("CameraScan")}>
+>>>>>>> Stashed changes
           <AntDesign name="camerao" size={70} color="#a5d6a7" />
           <Text style={{ color: "#a5d6a7", fontWeight: "bold" }}>카메라</Text>
         </SelectContainer>
