@@ -1934,6 +1934,12 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.7.1)
+  - VisionCamera (4.6.4):
+    - VisionCamera/Core (= 4.6.4)
+    - VisionCamera/React (= 4.6.4)
+  - VisionCamera/Core (4.6.4)
+  - VisionCamera/React (4.6.4):
+    - React-Core
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2023,6 +2029,7 @@ DEPENDENCIES:
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -2201,6 +2208,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2293,6 +2302,7 @@ SPEC CHECKSUMS:
   RNLocalize: ecaf4684a41a21cfe485ff15f1b695739909873d
   RNScreens: 351f431ef2a042a1887d4d90e1c1024b8ae9d123
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  VisionCamera: f56eaedde0d3fa095143b78374d29e89e71735f9
   Yoga: 90d80701b27946c4b23461c00a7207f300a6ff71
 
 PODFILE CHECKSUM: 8595c916fb451e07051231a69f89527c57e55521
