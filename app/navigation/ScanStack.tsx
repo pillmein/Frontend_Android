@@ -1,16 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ScanView from "../screens/Scan/ScanView";
+import { CameraScan } from "../screens/Scan/CameraScan";
 import AnalysisView from "../screens/Scan/AnalysisView";
 
 const Stack = createNativeStackNavigator<ScanStackParamList>();
 type ScanStackParamList = {
   ScanView: undefined;
+  CameraScan: undefined;
   AnalysisView: undefined;
 };
 function ScanStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ScanView" component={ScanView} />
+      <Stack.Screen name="CameraScan" component={CameraScan} />
       <Stack.Screen name="AnalysisView" component={AnalysisView} />
     </Stack.Navigator>
   );
