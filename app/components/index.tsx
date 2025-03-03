@@ -2,4 +2,6 @@ export { default as Header } from "./Header";
 export { default as ScreenWrapper } from "./ScreenWrapper";
 export { default as ButtonBack } from "./Button/ButtonBack";
 export { default as ButtonCommon } from "./Button/ButtonCommon";
+export { default as ButtonSaveSupplement } from "./Button/ButtonSaveSupplement";
 export { default as Supplements } from "./Supplements/Supplements";
+export { default as DeleteSavedSupplementModal } from "./Modal/DeleteSavedSupplementModal";

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeView from "../screens/Home/HomeView";
 import RecommendStack from "./RecommendStack"; // Recommend는 Stack 구조
 import ScanStack from "./ScanStack";
-import MyPageView from "../screens/MyPage/MyPageView";
+import MyPageStack from "./MyPageStack";
 import {
   MaterialCommunityIcons,
   Feather,
@@ -67,7 +67,7 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="MyPage"
-        component={MyPageView}
+        component={MyPageStack}
         options={{
           title: "마이페이지",
           tabBarIcon: (props) => (
