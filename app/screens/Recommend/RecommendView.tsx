@@ -1,5 +1,5 @@
 import Supplements from "../../components/Supplements/Supplements";
-import Header from "../../components/Header";
+import { ScreenWrapper } from "../../components";
 import { TouchableOpacity } from "react-native";
 
 import styled from "styled-components/native";
@@ -35,8 +35,7 @@ const supplementData = [
 
 const RecommendView = ({ navigation }: any) => {
   return (
-    <Container>
-      <Header />
+    <ScreenWrapper>
       <Text> OO님에게 {"\n"} 아래 영양제를 추천드려요 !</Text>
       <SupplementsContainer>
         <TouchableOpacity
@@ -62,17 +61,12 @@ const RecommendView = ({ navigation }: any) => {
           )}
         </TouchableOpacity>
       </SupplementsContainer>
-    </Container>
+    </ScreenWrapper>
   );
 };
 
 export default RecommendView;
 
-const Container = styled.View`
-  flex: 1;
-  padding: 16px;
-  background-color: #fff;
-`;
 const SupplementsContainer = styled.View`
   margin-top: 20px;
 `;

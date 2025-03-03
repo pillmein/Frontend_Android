@@ -15,9 +15,10 @@ export const InfoHeader = styled.View`
 export const SupplementName = styled.Text`
   font-size: 24px;
   font-weight: bold;
+  text-align: center;
   position: absolute;
-  left: 50%;
-  margin-left: -50px;
+  left: 0;
+  right: 0;
 `;
 export const InfoSection = styled.View`
   margin-top: 20px;
