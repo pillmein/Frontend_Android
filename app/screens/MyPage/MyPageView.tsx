@@ -8,7 +8,7 @@ const MyPageView = ({ navigation }: any) => {
     {
       icon: "format-list-bulleted-square",
       text: "나의 영양제 목록",
-      screen: "MySupplements",
+      screen: "MySupplementsView",
     },
     { icon: "clock-outline", text: "나의 복용 알림 설정", screen: "Reminder" },
     {
