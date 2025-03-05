@@ -18,28 +18,6 @@ const ScanView = ({ navigation }: any) => {
     }
   };
 
-<<<<<<< Updated upstream
-  const scanImages = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      alert("카메라 접근 권한이 필요합니다.");
-      return;
-    }
-
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ["images"],
-      allowsMultipleSelection: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const selectedImages = result.assets.map((asset) => asset.uri);
-      navigation.navigate("AnalysisView", { images: selectedImages });
-    }
-  };
-
-=======
->>>>>>> Stashed changes
   return (
     <ScreenWrapper>
       <ScanContainer>
@@ -52,11 +30,7 @@ const ScanView = ({ navigation }: any) => {
             어렵기만 했던 영양 성분,{`\n`}쉽고 간편하게 설명해 드려요.
           </ScanLabel>
         </LabelContainer>
-<<<<<<< Updated upstream
-        <SelectContainer onPress={scanImages}>
-=======
-        <SelectContainer onPress={() => navigation.navigate("CameraScan")}>
->>>>>>> Stashed changes
+        <SelectContainer onPress={() => navigation.navigate("CameraView")}>
           <AntDesign name="camerao" size={70} color="#a5d6a7" />
           <Text style={{ color: "#a5d6a7", fontWeight: "bold" }}>카메라</Text>
         </SelectContainer>
