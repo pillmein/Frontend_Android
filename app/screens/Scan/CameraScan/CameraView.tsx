@@ -3,17 +3,17 @@ import {
   useCameraDevice,
   useCameraPermission,
 } from "react-native-vision-camera";
-import { Text, View, Button, Linking, Alert } from "react-native";
+import { Text, Linking, Alert } from "react-native";
 import { useRef, useEffect, useState } from "react";
+import * as S from "./Camera.style";
 
-export const CameraScan = ({ navigation }: any) => {
+export const CameraView = ({ navigation }: any) => {
   const device = useCameraDevice("back");
   const { hasPermission, requestPermission } = useCameraPermission();
   const camera = useRef<Camera>(null);
-  const [photos, setPhotos] = useState<string[]>([]);
+  const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
   const [isCameraActive, setIsCameraActive] = useState(true);
 
-  // 앱 실행 시 한 번만 카메라 권한 요청
   useEffect(() => {
     (async () => {
       if (!hasPermission) {
@@ -35,14 +35,14 @@ export const CameraScan = ({ navigation }: any) => {
   const takePhoto = async () => {
     if (camera.current) {
       const photo = await camera.current.takePhoto();
-      setPhotos([...photos, `file://${photo.path}`]);
+      setCapturedPhotos((prev) => [...prev, `file://${photo.path}`]);
     }
   };
 
   if (!device) return <Text>카메라를 찾을 수 없습니다.</Text>;
 
   return (
-    <View style={{ flex: 1 }}>
+    <S.Container>
       <Camera
         ref={camera}
         style={{ flex: 1 }}
@@ -50,8 +50,22 @@ export const CameraScan = ({ navigation }: any) => {
         isActive={isCameraActive}
         photo={true}
       />
-      <Button title="사진 찍기" onPress={takePhoto} />
-      <Button title="카메라 닫기" onPress={() => navigation.goBack()} />
-    </View>
+      <S.Header>
+        <S.CancelButton onPress={() => navigation.goBack()}>
+          <S.CancelText>취소</S.CancelText>
+        </S.CancelButton>
+      </S.Header>
+
+      <S.BottomContainer>
+        {capturedPhotos.length > 0 && (
+          <S.ThumbnailContainer
+            onPress={() => navigation.navigate("Preview", { capturedPhotos })}
+          >
+            <S.Thumbnail source={{ uri: capturedPhotos[0] }} />
+          </S.ThumbnailContainer>
+        )}
+        <S.CaptureButton onPress={takePhoto} />
+      </S.BottomContainer>
+    </S.Container>
   );
 };

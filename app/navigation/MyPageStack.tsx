@@ -1,9 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MyPageView from "../screens/MyPage/MyPageView";
-import SavedSupplementsView from "../screens/MyPage/SavedSupplements/SavedSupplementsView";
-import SavedSupplementInfoView from "../screens/MyPage/SavedSupplements/SavedSupplementInfoView";
+import SavedSupplementsView from "../screens/MyPage/SavedSupplements/SavedSupplementsList/SavedSupplementsView";
+import SavedSupplementInfoView from "../screens/MyPage/SavedSupplements/SavedSupplementInfo/SavedSupplementInfoView";
 import MySupplementsView from "../screens/MyPage/MySupplements/MySupplementsView";
 import AddMySupplementsView from "../screens/MyPage/MySupplements/AddMySupplementsView";
+import AnalysisResultsListView from "../screens/MyPage/AnalysisResults/AnalysisResultsList/AnalysisResultsListView";
+import AnalysisResultsDetailView from "../screens/MyPage/AnalysisResults/AnalysisResultsDetail/AnalysisResultsDetailView";
 
 const Stack = createNativeStackNavigator<MyPageStackParamList>();
 type MyPageStackParamList = {
@@ -12,6 +14,8 @@ type MyPageStackParamList = {
   SavedSupplementInfoView: undefined;
   MySupplementsView: undefined;
   AddMySupplementsView: undefined;
+  AnalysisResultsListView: undefined;
+  AnalysisResultsDetailView: undefined;
 };
 function MyPageStack() {
   return (
@@ -29,6 +33,14 @@ function MyPageStack() {
       <Stack.Screen
         name="AddMySupplementsView"
         component={AddMySupplementsView}
+      />
+      <Stack.Screen
+        name="AnalysisResultsListView"
+        component={AnalysisResultsListView}
+      />
+      <Stack.Screen
+        name="AnalysisResultsDetailView"
+        component={AnalysisResultsDetailView}
       />
     </Stack.Navigator>
   );
