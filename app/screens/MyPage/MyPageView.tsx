@@ -19,7 +19,7 @@ const MyPageView = ({ navigation }: any) => {
     {
       icon: "image-search-outline",
       text: "분석 결과 목록",
-      screen: "AnalysisResults",
+      screen: "AnalysisResultsListView",
     },
   ] as const;
 
