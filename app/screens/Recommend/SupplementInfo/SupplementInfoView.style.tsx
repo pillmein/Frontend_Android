@@ -24,15 +24,15 @@ export const InfoSection = styled.View`
   margin-top: 20px;
   margin-bottom: 2px;
   padding: 8px;
-  background-color: #eff5ec;
-  border-radius: 10px;
+  border-radius: 20px;
 `;
 export const InfoLabel = styled.Text`
-  text-align: left;
-  padding: 8px;
+  text-align: center;
+  align-self: flex-start;
+  padding: 10px;
   background-color: #6a986c;
   color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
