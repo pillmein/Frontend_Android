@@ -20,7 +20,7 @@ const AnalysisView = () => {
     <ScreenWrapper>
       <S.InfoHeader>
         <ButtonBack />
-        <S.SupplementName>{name}</S.SupplementName>
+        <S.SupplementName>영양 성분 분석 결과</S.SupplementName>
       </S.InfoHeader>
       <S.InfoSection>
         <S.InfoLabel>주요 성분 및 함량</S.InfoLabel>
