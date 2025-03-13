@@ -24,7 +24,7 @@ export const InfoSection = styled.View`
   margin-top: 20px;
   margin-bottom: 2px;
   padding: 8px;
-  background-color: #eff5ec;
+  background-color: #a5d6a730;
   border-radius: 10px;
 `;
 export const InfoLabel = styled.Text`
