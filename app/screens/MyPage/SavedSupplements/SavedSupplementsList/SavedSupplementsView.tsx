@@ -3,7 +3,7 @@ import {
   ScreenWrapper,
   ButtonSaveSupplement,
   DeleteSavedSupplementModal,
-} from "../../../components";
+} from "../../../../components";
 import { useState } from "react";
 import * as S from "./SavedSupplements.style";
 import { TouchableOpacity } from "react-native";

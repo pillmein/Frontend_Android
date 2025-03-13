@@ -1,5 +1,5 @@
-import { ButtonBack } from "../../../components";
-import Header from "../../../components/Header";
+import { ButtonBack } from "../../../../components";
+import Header from "../../../../components/Header";
 import * as S from "./SavedSupplementInfoView.style";
 
 //임시 데이터
