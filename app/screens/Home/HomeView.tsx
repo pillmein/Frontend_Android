@@ -2,7 +2,7 @@ import { ScreenWrapper } from "../../components";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import * as S from "./Home.style";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Fontisto } from "@expo/vector-icons";
 import pill from "../../assets/headerLogo.png";
 
 // 임시 데이터
@@ -17,12 +17,20 @@ const IntakeLog = ["2025-02-24", "2025-02-25", "2025-02-27"];
 
 const HomeView = () => {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(today.getDate());
-  const [checkedSupplements, setCheckedSupplements] = useState([
-    "비타민C 1000",
-  ]); // 초기 체크된 영양제
+  const [checkedSupplements, setCheckedSupplements] = useState<string[]>([]);
 
-  // ✅ 주간 캘린더 데이터 생성
+  // 임시 영양제 목록 데이터
+  // const supplements = [
+  //   { name: "비타민C 1000", category: "비타민C" },
+  //   { name: "락토핏 골드", category: "유산균" },
+  //   { name: "밀크씨슬 헬퍼", category: "밀크씨슬" },
+  //   { name: "칼슘 앤 마그네슘 비타민D 아연", category: "칼슘" },
+  // ];
+
+  // 나의 영양제 목록 없을 경우
+  const supplements: string | ArrayLike<any> | null | undefined = [];
+
+  // 주간 캘린더 데이터 생성
   const getWeekDays = () => {
     const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() - today.getDay());
@@ -31,23 +39,21 @@ const HomeView = () => {
       day.setDate(startOfWeek.getDate() + i);
       const formattedDate = day.toISOString().split("T")[0];
 
+      const isToday = day.getDate() === today.getDate();
+
       return {
         date: day.getDate(),
         day: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][i],
-        isToday: day.getDate() === today.getDate(),
-        isTaken: IntakeLog.includes(formattedDate),
+        isToday,
+        isTaken: isToday
+          ? checkedSupplements.length === supplements.length &&
+            supplements.length > 0
+          : IntakeLog.includes(formattedDate),
       };
     });
   };
 
   const weekDays = getWeekDays();
-
-  const supplements = [
-    { name: "비타민C 1000", category: "비타민C" },
-    { name: "락토핏 골드", category: "유산균" },
-    { name: "밀크씨슬 헬퍼", category: "밀크씨슬" },
-    { name: "칼슘 앤 마그네슘 비타민D 아연", category: "칼슘" },
-  ];
 
   const toggleCheck = (name: string) => {
     setCheckedSupplements((prev) => {
@@ -83,7 +89,7 @@ const HomeView = () => {
         />
       </S.CalendarContainer>
 
-      {/* ✅ 지난 주 복용률 UI */}
+      {/* 지난 주 복용률 UI */}
       <S.ProgressContainer>
         <S.ProgressTitle>지난 주 복용률</S.ProgressTitle>
         <S.ProgressBarContainer>
@@ -97,29 +103,39 @@ const HomeView = () => {
       <S.SupplementContainer>
         <S.SectionTitle>잊지 말고 꼭 챙겨 드세요!</S.SectionTitle>
       </S.SupplementContainer>
-      <FlatList
-        data={supplements}
-        keyExtractor={(item) => item.name}
-        extraData={checkedSupplements}
-        renderItem={({ item }) => (
-          <S.SupplementItem key={item.name}>
-            <FontAwesome
-              name={
-                checkedSupplements.includes(item.name)
-                  ? "check-square"
-                  : "square-o"
-              }
-              size={25}
-              color="black"
-              onPress={() => toggleCheck(item.name)}
-            />
-            <S.SupplementText>{item.name}</S.SupplementText>
-            <S.CategoryTag>
-              <S.CategoryText>{item.category}</S.CategoryText>
-            </S.CategoryTag>
-          </S.SupplementItem>
-        )}
-      />
+
+      {supplements.length > 0 ? (
+        <FlatList
+          data={supplements}
+          keyExtractor={(item) => item.name}
+          extraData={checkedSupplements}
+          renderItem={({ item }) => (
+            <S.SupplementItem key={item.name}>
+              <FontAwesome
+                name={
+                  checkedSupplements.includes(item.name)
+                    ? "check-square"
+                    : "square-o"
+                }
+                size={25}
+                color="#a5d6a7"
+                onPress={() => toggleCheck(item.name)}
+              />
+              <S.SupplementText>{item.name}</S.SupplementText>
+              <S.CategoryTag>
+                <S.CategoryText>{item.category}</S.CategoryText>
+              </S.CategoryTag>
+            </S.SupplementItem>
+          )}
+        />
+      ) : (
+        <S.EmptySupplementContainer>
+          <Fontisto name="pills" size={75} color="#a5d6a7" />
+          <S.EmptySupplementText>
+            현재 복용 중인 영양제가 없어요.{"\n"}필요한 영양제를 추천받아보세요!
+          </S.EmptySupplementText>
+        </S.EmptySupplementContainer>
+      )}
     </ScreenWrapper>
   );
 };

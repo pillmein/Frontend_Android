@@ -138,3 +138,17 @@ export const CategoryText = styled.Text`
   font-size: 14px;
   color: #333;
 `;
+
+export const EmptySupplementContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+export const EmptySupplementText = styled.Text`
+  color: #a5d6a7;
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: center;
+  line-height: 24px;
+`;
