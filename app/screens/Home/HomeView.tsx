@@ -17,29 +17,7 @@ const IntakeLog = ["2025-02-24", "2025-02-25", "2025-02-27"];
 
 const HomeView = () => {
   const today = new Date();
-  const [checkedSupplements, setCheckedSupplements] = useState([
-    "비타민C 1000",
-  ]); // 초기 체크된 영양제
-
-  // 주간 캘린더 데이터 생성
-  const getWeekDays = () => {
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    return Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
-      const formattedDate = day.toISOString().split("T")[0];
-
-      return {
-        date: day.getDate(),
-        day: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][i],
-        isToday: day.getDate() === today.getDate(),
-        isTaken: IntakeLog.includes(formattedDate),
-      };
-    });
-  };
-
-  const weekDays = getWeekDays();
+  const [checkedSupplements, setCheckedSupplements] = useState<string[]>([]);
 
   // 임시 영양제 목록 데이터
   // const supplements = [
@@ -51,6 +29,31 @@ const HomeView = () => {
 
   // 나의 영양제 목록 없을 경우
   const supplements: string | ArrayLike<any> | null | undefined = [];
+
+  // 주간 캘린더 데이터 생성
+  const getWeekDays = () => {
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    return Array.from({ length: 7 }, (_, i) => {
+      const day = new Date(startOfWeek);
+      day.setDate(startOfWeek.getDate() + i);
+      const formattedDate = day.toISOString().split("T")[0];
+
+      const isToday = day.getDate() === today.getDate();
+
+      return {
+        date: day.getDate(),
+        day: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][i],
+        isToday,
+        isTaken: isToday
+          ? checkedSupplements.length === supplements.length &&
+            supplements.length > 0
+          : IntakeLog.includes(formattedDate),
+      };
+    });
+  };
+
+  const weekDays = getWeekDays();
 
   const toggleCheck = (name: string) => {
     setCheckedSupplements((prev) => {
@@ -115,7 +118,7 @@ const HomeView = () => {
                     : "square-o"
                 }
                 size={25}
-                color="black"
+                color="#a5d6a7"
                 onPress={() => toggleCheck(item.name)}
               />
               <S.SupplementText>{item.name}</S.SupplementText>
