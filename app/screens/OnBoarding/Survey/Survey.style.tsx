@@ -259,3 +259,15 @@ export const AddContainer = styled.View`
   flex: 1;
   align-items: flex-end;
 `;
+
+export const CompleteContainer = styled.View`
+  flex: 1;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ConfirmText = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+`;

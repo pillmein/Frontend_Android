@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -42,14 +43,28 @@ const MySupplementsView = () => {
   const [selectedSupplement, setSelectedSupplement] = useState<number | null>(
     null
   );
+  const isFocused = useIsFocused();
 
-  // ✅ 삭제 버튼 클릭 시 모달을 먼저 띄움
+  useEffect(() => {
+    if (isFocused) {
+      fetchMySupplements();
+    }
+  }, [isFocused]);
+
+  const fetchMySupplements = () => {
+    //TODO: API 호출 넣기
+    const updatedSupplements = supplementData;
+
+    setSupplements(updatedSupplements);
+  };
+
+  // 삭제 버튼 클릭 시 모달
   const handleDeletePress = (id: number) => {
     setSelectedSupplement(id); // 삭제할 영양제 저장
     setModalVisible(true); // 모달 표시
   };
 
-  // ✅ 모달에서 "삭제" 버튼을 누르면 실행
+  // 모달에서 삭제 버튼 눌렀을 경우
   const handleConfirmDelete = () => {
     if (selectedSupplement !== null) {
       setSupplements((prev) =>
@@ -86,7 +101,7 @@ const MySupplementsView = () => {
         )}
       />
 
-      {/* ✅ 영양제 추가 버튼 */}
+      {/* 영양제 추가 */}
       <ButtonCommon
         text="복용 중인 영양제 추가하기"
         navigateTo="AddMySupplementsView"
