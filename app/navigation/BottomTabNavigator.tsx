@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeView from "../screens/Home/HomeView";
-import RecommendStack from "./RecommendStack"; // Recommend는 Stack 구조
+import RecommendStack from "./RecommendStack";
 import ScanStack from "./ScanStack";
 import MyPageStack from "./MyPageStack";
+import IntakeTimeStack from "./IntakeTimeStack";
 import {
   MaterialCommunityIcons,
   Feather,
@@ -55,6 +56,27 @@ function BottomTabNavigator() {
           title: "영양성분 스캔",
           tabBarIcon: (props) => (
             <MaterialIcons name="image-search" size={24} color="black" />
+          ),
+          tabBarActiveBackgroundColor: "#A5D6A766",
+          tabBarActiveTintColor: "black",
+          tabBarItemStyle: {
+            marginTop: 2,
+            borderRadius: 20,
+            overflow: "hidden",
+          },
+        }}
+      />
+      <Tab.Screen
+        name="IntakeTime"
+        component={IntakeTimeStack}
+        options={{
+          title: "복용 시간 추천",
+          tabBarIcon: (props) => (
+            <MaterialCommunityIcons
+              name="bell-ring-outline"
+              size={24}
+              color="black"
+            />
           ),
           tabBarActiveBackgroundColor: "#A5D6A766",
           tabBarActiveTintColor: "black",
