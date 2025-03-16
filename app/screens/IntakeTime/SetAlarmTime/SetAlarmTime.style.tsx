@@ -1,0 +1,42 @@
+import styled from "styled-components/native";
+
+export const Header = styled.View`
+  margin-top: 5px;
+  margin-bottom: 10px;
+  flex-direction: row;
+  position: relative;
+`;
+export const Title = styled.Text`
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+`;
+
+export const EmptyAlarmContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+export const EmptyAlarmText = styled.Text`
+  color: #a5d6a7;
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: center;
+  line-height: 24px;
+`;
+
+export const Button = styled.TouchableOpacity`
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 10px;
+  margin-vertical: 10px;
+`;
+
+export const ButtonText = styled.Text`
+  text-align: center;
+  font-size: 16px;
+`;
