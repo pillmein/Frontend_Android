@@ -82,22 +82,25 @@ const SavedSupplementsView = ({ navigation }: any) => {
         <S.Title>찜한 영양제 목록</S.Title>
       </S.Header>
       <S.SupplementsContainer>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("SavedSupplementInfoView", { supplementData })
-          }
-        >
-          {supplementData.map(
-            ({
-              id,
-              image,
-              name,
-              ingredients,
-              amount,
-              effects,
-              precautions,
-            }) => (
-              <S.SupplementCard key={id}>
+        {supplementData.map(
+          ({ id, image, name, ingredients, amount, effects, precautions }) => (
+            <TouchableOpacity
+              key={id}
+              onPress={() =>
+                navigation.navigate("SavedSupplementInfoView", {
+                  supplement: {
+                    id,
+                    image,
+                    name,
+                    ingredients,
+                    amount,
+                    effects,
+                    precautions,
+                  },
+                })
+              }
+            >
+              <S.SupplementCard>
                 {/* 제품 이미지 */}
                 <S.ImageContainer>
                   <S.ProductImage
@@ -128,9 +131,9 @@ const SavedSupplementsView = ({ navigation }: any) => {
                   </S.Description>
                 </S.InfoContainer>
               </S.SupplementCard>
-            )
-          )}
-        </TouchableOpacity>
+            </TouchableOpacity>
+          )
+        )}
       </S.SupplementsContainer>
       <DeleteSavedSupplementModal
         visible={modalVisible}
