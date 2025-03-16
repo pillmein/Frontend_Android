@@ -35,10 +35,8 @@ const PrevRecommendView = ({ navigation }: any) => {
         <S.Button>
           <S.ButtonText>건강설문 새로 답하기 ✏️</S.ButtonText>
         </S.Button>
-        <S.Button>
-          <S.ButtonText onPress={() => navigation.navigate("RecommendView")}>
-            이전 답변 이용할게요.
-          </S.ButtonText>
+        <S.Button onPress={() => navigation.navigate("AnalysisResultView")}>
+          <S.ButtonText>이전 답변 이용할게요.</S.ButtonText>
         </S.Button>
       </S.ButtonContainer>
     </ScreenWrapper>
