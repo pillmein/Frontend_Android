@@ -3,16 +3,19 @@ import styled from "styled-components/native";
 
 interface ButtonCommonProps {
   text: string;
+  onPress?: () => void;
   navigateTo?: string;
 }
 
-function ButtonCommon({ text, navigateTo }: ButtonCommonProps) {
+function ButtonCommon({ text, onPress, navigateTo }: ButtonCommonProps) {
   const navigation = useNavigation();
   return (
     <ButtonContainer>
       <Button
         onPress={() => {
-          if (navigateTo) {
+          if (onPress) {
+            onPress();
+          } else if (navigateTo) {
             navigation.navigate(navigateTo as never);
           }
         }}

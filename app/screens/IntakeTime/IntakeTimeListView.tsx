@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { FlatList } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import { ScreenWrapper, ButtonBack } from "../../components";
 import { AntDesign } from "@expo/vector-icons";
 import * as S from "./IntakeTimeList.style";
@@ -36,7 +36,7 @@ const supplementData = [
   },
 ];
 
-const MySupplementsView = () => {
+const MySupplementsView = ({ navigation }: any) => {
   const [supplements, setSupplements] = useState(supplementData);
   const isFocused = useIsFocused();
 
@@ -74,7 +74,11 @@ const MySupplementsView = () => {
             </S.SupplementInfo>
             <S.IntakeTimes>{item.intakeTimes}</S.IntakeTimes>
             <S.MoveToSetting>
-              <AntDesign name="rightcircleo" size={24} color="#a5d6a7" />
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SetAlarmTimeView")}
+              >
+                <AntDesign name="rightcircleo" size={24} color="#a5d6a7" />
+              </TouchableOpacity>
             </S.MoveToSetting>
           </S.SupplementCard>
         )}
