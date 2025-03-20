@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AlarmModal from "../../../components/Modal/AlarmModal";
 import * as S from "./SetAlarmTime.style";
 import { useState } from "react";
+import { FlatList } from "react-native";
 
 const SetAlarmTimeView = ({ navigation }: any) => {
   // TODO : API 연동
@@ -46,6 +47,19 @@ const SetAlarmTimeView = ({ navigation }: any) => {
     setAlarms((prev) => prev.filter((alarm) => alarm.alarmId !== alarmId));
   };
 
+  const getRepeatTypeLabel = (repeatType: string) => {
+    switch (repeatType) {
+      case "DAILY":
+        return "매일 반복";
+      case "EVERY_TWO_DAYS":
+        return "2일 간격 반복";
+      case "WEEKLY":
+        return "일주일마다 반복";
+      default:
+        return "반복 없음";
+    }
+  };
+
   return (
     <ScreenWrapper>
       <S.Header>
@@ -72,18 +86,19 @@ const SetAlarmTimeView = ({ navigation }: any) => {
         </>
       ) : (
         <>
-          {/* 알림 카드 목록 */}
-          <S.AlarmListContainer>
-            {alarms.map((alarm) => (
+          <FlatList
+            data={alarms}
+            keyExtractor={(item) => item.alarmId.toString()}
+            renderItem={({ item }) => (
               <AlarmTimeCard
-                key={alarm.alarmId}
-                alarmTime={alarm.time}
-                repeatType="매일 반복"
+                alarmTime={item.time}
+                repeatType={getRepeatTypeLabel(item.repeatType)}
                 mode="edit"
-                onPress={() => handleDeleteAlarm(alarm.alarmId)}
+                onPress={() => handleDeleteAlarm(item.alarmId)}
               />
-            ))}
-          </S.AlarmListContainer>
+            )}
+            showsVerticalScrollIndicator={true}
+          />
 
           <ButtonCommon
             text="복용 시간 추천 받기"
@@ -96,7 +111,23 @@ const SetAlarmTimeView = ({ navigation }: any) => {
             visible={isPickerVisible}
             onClose={() => setPickerVisible(false)}
             onSave={(time, repeat) => {
-              console.log("저장됨", time, repeat);
+              // 1. 시간 포맷을 24시간제 문자열로 변환
+              const hour = time.getHours().toString().padStart(2, "0");
+              const minute = time.getMinutes().toString().padStart(2, "0");
+              const formattedTime = `${hour}:${minute}`;
+
+              // 2. 새로운 알람 객체 생성
+              const newAlarm = {
+                alarmId: Date.now(), // 임시 고유 ID //TODO: 나중에 서버에서 알림 ID 넘겨주면 교체
+                time: formattedTime,
+                repeatType: repeat,
+              };
+
+              // 3. 기존 alarms에 추가
+              setAlarms((prev) => [...prev, newAlarm]);
+
+              console.log("저장된 시간:", formattedTime, repeat);
+              // 4. 모달 닫기
               setPickerVisible(false);
             }}
           />
