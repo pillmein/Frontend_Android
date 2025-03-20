@@ -40,3 +40,19 @@ export const ButtonText = styled.Text`
   text-align: center;
   font-size: 16px;
 `;
+
+export const AlarmListContainer = styled.View``;
+
+export const AddAlarmButton = styled.TouchableOpacity`
+  width: 100%;
+  background-color: #eee;
+  padding: 16px;
+  border-radius: 12px;
+  align-items: center;
+`;
+
+export const AddAlarmButtonText = styled.Text`
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+`;
