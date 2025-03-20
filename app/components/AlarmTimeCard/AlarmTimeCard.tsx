@@ -1,5 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import { parse, format } from "date-fns";
 import * as S from "./AlarmTimeCard.style";
 
 type Props = {
@@ -11,18 +12,12 @@ type Props = {
 };
 
 const formatTimeWithAmPm = (time: string) => {
-  const [hourStr, minute] = time.split(":");
-  let hour = parseInt(hourStr, 10);
-
-  const ampm = hour >= 12 ? "PM" : "AM";
-
-  hour = hour % 12;
-  if (hour === 0) hour = 12;
+  const parsedDate = parse(time, "HH:mm", new Date());
 
   return {
-    ampm,
-    hour: hour.toString().padStart(2, "0"),
-    minute,
+    ampm: format(parsedDate, "a"), // AM / PM
+    hour: format(parsedDate, "hh"),
+    minute: format(parsedDate, "mm"),
   };
 };
 

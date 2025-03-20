@@ -10,7 +10,7 @@ interface ButtonCommonProps {
 function ButtonCommon({ text, onPress, navigateTo }: ButtonCommonProps) {
   const navigation = useNavigation();
   return (
-    <ButtonContainer>
+    <>
       <Button
         onPress={() => {
           if (onPress) {
@@ -22,13 +22,9 @@ function ButtonCommon({ text, onPress, navigateTo }: ButtonCommonProps) {
       >
         <ButtonText>{text}</ButtonText>
       </Button>
-    </ButtonContainer>
+    </>
   );
 }
-
-const ButtonContainer = styled.View`
-  margin-top: 40px;
-`;
 const Button = styled.TouchableOpacity`
   background-color: #a5d6a790;
   padding: 15px;

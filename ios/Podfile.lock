@@ -1845,6 +1845,27 @@ PODS:
     - React-logger (= 0.76.7)
     - React-perflogger (= 0.76.7)
     - React-utils (= 0.76.7)
+  - RNDateTimePicker (8.2.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNGestureHandler (2.24.0):
     - DoubleConversion
     - glog
@@ -2047,6 +2068,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
@@ -2224,6 +2246,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -2322,6 +2346,7 @@ SPEC CHECKSUMS:
   React-utils: 0342746d2cf989cf5e0d1b84c98cfa152edbdf3f
   ReactCodegen: e1c019dc68733dd2c5d3b263b4a6dc72002c0045
   ReactCommon: 81e0744ee33adfd6d586141b927024f488bc49ea
+  RNDateTimePicker: 9ec036a62ad0f5a2d04c1c7829338e87b4e423e7
   RNGestureHandler: 6aedf747478f64fbeddb3ad5d5d0dfdf2361d136
   RNGoogleSignin: f57ee39074735c97813454e0ff874659df67e302
   RNLocalize: ecaf4684a41a21cfe485ff15f1b695739909873d
