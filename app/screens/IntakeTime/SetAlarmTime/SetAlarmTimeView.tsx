@@ -123,8 +123,19 @@ const SetAlarmTimeView = ({ navigation }: any) => {
                 repeatType: repeat,
               };
 
-              // 3. 기존 alarms에 추가
-              setAlarms((prev) => [...prev, newAlarm]);
+              // 3. 기존 alarms에 추가, 시간 순으로 정렬
+              setAlarms((prev) => {
+                const updatedAlarms = [...prev, newAlarm];
+                updatedAlarms.sort((a, b) => {
+                  const [aHour, aMinute] = a.time.split(":").map(Number);
+                  const [bHour, bMinute] = b.time.split(":").map(Number);
+
+                  if (aHour !== bHour) return aHour - bHour;
+                  return aMinute - bMinute;
+                });
+
+                return updatedAlarms;
+              });
 
               console.log("저장된 시간:", formattedTime, repeat);
               // 4. 모달 닫기
