@@ -30,7 +30,7 @@ const PageIndicator = ({ currentIndex, surveyData }: Props) => {
 
   return (
     <Container>
-      {categoryIndex + 1}/{categoryTotal}
+      {categoryIndex + 1} / {categoryTotal}
     </Container>
   );
 };

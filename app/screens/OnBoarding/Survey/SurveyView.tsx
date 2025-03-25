@@ -193,6 +193,7 @@ const SurveyView = function ({ navigation }: any) {
     [key: number]: string;
   }>({});
   const [subjectiveAnswer, setSubjectiveAnswer] = useState("");
+  const [isSubjectiveAnswered, setIsSubjectiveAnswered] = useState(false);
 
   const currentSurvey = surveyData[currentIndex];
 
@@ -223,6 +224,7 @@ const SurveyView = function ({ navigation }: any) {
 
   const handleInputText = (newText: string) => {
     setSubjectiveAnswer(newText);
+    setIsSubjectiveAnswered(newText.length > 0);
   };
 
   return (
@@ -275,8 +277,21 @@ const SurveyView = function ({ navigation }: any) {
                 이전
               </S.NavButtonText>
             </S.NavPrevButton>
-            <S.NavButton onPress={handleNext}>
-              <S.NavButtonText>SKIP</S.NavButtonText>
+            <S.NavButton
+              onPress={handleNext}
+              style={{
+                backgroundColor: isSubjectiveAnswered ? "#a5d6a7" : "white",
+                borderWidth: 1,
+                borderColor: isSubjectiveAnswered ? "#a5d6a7" : "#ddd",
+              }}
+            >
+              <S.NavButtonText
+                style={{
+                  color: isSubjectiveAnswered ? "white" : "#aaa",
+                }}
+              >
+                {isSubjectiveAnswered ? "다음" : "skip"}
+              </S.NavButtonText>
             </S.NavButton>
           </S.BottomNav>
         </>
