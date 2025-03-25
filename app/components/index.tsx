@@ -8,3 +8,4 @@ export { default as DeleteSavedSupplementModal } from "./Modal/DeleteSavedSupple
 export { default as DeleteMySupplementModal } from "./Modal/DeleteMySupplementModal";
 export { default as DeleteAnalysisResultModal } from "./Modal/DeleteAnalysisResultModal";
 export { default as AlarmTimeCard } from "./AlarmTimeCard/AlarmTimeCard";
+export { default as PageIndicator } from "./PageIndicator";

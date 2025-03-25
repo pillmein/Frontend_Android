@@ -9,7 +9,7 @@ export const SurveyContainer = styled.View`
   padding: 30px;
   gap: 20px;
   display: flex;
-  min-height: 650px;
+  height: 650px;
   flex-direction: column;
 `;
 export const Category = styled.Text`
@@ -24,10 +24,11 @@ export const Question = styled.Text`
   margin-bottom: 5px;
 `;
 
-export const Description = styled.Text`
+export const Description = styled.Text<{ textColor?: string }>`
   font-size: 14px;
-  color: gray;
+  color: ${({ textColor }: any) => textColor || "gray"};
   margin-bottom: 20px;
+  line-height: 20px;
 `;
 
 export const OptionButton = styled.TouchableOpacity`
@@ -55,11 +56,23 @@ export const CheckMark = styled.Text`
   font-size: 10px;
 `;
 
+export const VoiceInputButton = styled.TouchableOpacity`
+  background-color: #a5d6a7;
+  border-radius: 50px;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  margin-top: 20px;
+`;
+
 export const BottomNav = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 180px;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-bottom: 30px;
 `;
 export const NavPrevButton = styled.TouchableOpacity`
@@ -78,16 +91,12 @@ export const NavButtonText = styled.Text`
   font-size: 16px;
 `;
 
-export const PageIndicator = styled.Text`
-  font-size: 16px;
-  color: gray;
-`;
-
 export const YesOrNoContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   margin-top: 20px;
 `;
+
 export const YesOrNoButton = styled.TouchableOpacity`
   width: 70px;
   height: 50px;
