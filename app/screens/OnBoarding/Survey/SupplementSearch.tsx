@@ -12,26 +12,66 @@ const SupplementSearch = ({
   setIsSearching,
 }: any) => {
   const [supplementName, setSupplementName] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<boolean | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [searchResult, setSearchResult] = useState<null | {
+    supplementName: string;
+    ingredients: string;
+    imgUrl: string;
+  }>(null);
   const [supplementInput, setSupplementInput] = useState<boolean>(false);
 
   //임시 db
+  const supplementDB = [
+    {
+      supplementName: "밀크씨슬 헬퍼",
+      ingredients:
+        "비타민 B2, 비타민 B1염산염, 비타민 B6 염산염, 산화아연, 비타민 C, 밀크씨슬추출물분말, 스테아린산마그네슘, 이산화규소, 벌꿀분말, 덱스트린, 타우린, 해조혼합분말, 혼합유당, 건조효모, 결정셀룰로스, 과일채소혼합분말, 히드록시프로필메틸셀룰로스, 치커리뿌리추출물분말, 니코틴산아미드, 황산망간, 아미노산혼합제제, 헛개나무열매추출분말, 곡물혼합분말, 표고버섯추출물분말, 엽산, 비타민B12혼합제제분말",
+      imgUrl:
+        "https://via.placeholder.com/100x100.png?text=%EB%B0%80%ED%81%AC%EC%94%A8%EC%8A%AC",
+    },
+    {
+      supplementName: "임팩타민",
+      ingredients: "비타민B군, 아연, 셀레늄",
+      imgUrl:
+        "https://via.placeholder.com/100x100.png?text=%EC%9E%84%ED%8C%A9%ED%83%80%EB%B0%8C",
+    },
+  ];
+
   const checkSupplementInDB = (name: string) => {
-    const supplementDB = ["밀크씨슬", "임팩타민"];
-    return supplementDB.includes(name);
+    return (
+      supplementDB.find((supplement) => supplement.supplementName === name) ||
+      null
+    );
   };
 
   const handleSearch = () => {
     if (!supplementName.trim()) return;
-    const existsInDB = checkSupplementInDB(supplementName);
-    setSearchResult(existsInDB);
+    const result = checkSupplementInDB(supplementName.trim());
+    setSearchResult(result);
+    setHasSearched(true);
   };
 
   const handleConfirmSupplement = () => {
-    setConfirmedSupplements((prev: string[]) => [...prev, supplementName]);
+    if (!searchResult) return;
+
+    const selectedSupplement = {
+      supplementName: searchResult.supplementName,
+      ingredients: searchResult.ingredients,
+    };
+
+    console.log("복용 중인 영양제로 저장:", selectedSupplement);
+
+    setConfirmedSupplements((prev: any[]) => [
+      ...prev,
+      {
+        supplementName: searchResult.supplementName,
+        ingredients: searchResult.ingredients,
+      },
+    ]);
     setIsConfirmed(true);
     setSupplementName("");
     setSearchResult(null);
+    setHasSearched(false);
     setIsSearching(false);
   };
 
@@ -39,10 +79,10 @@ const SupplementSearch = ({
     <>
       {confirmedSupplements.length > 0 && (
         <View>
-          {confirmedSupplements.map((supplement: string, id: number) => (
+          {confirmedSupplements.map((supplement: any, id: number) => (
             <View key={id}>
               <S.ConfirmedSupplement>
-                <Text>{supplement}</Text>
+                <Text>{supplement.supplementName}</Text>
               </S.ConfirmedSupplement>
             </View>
           ))}
@@ -84,17 +124,22 @@ const SupplementSearch = ({
               </S.ConfirmButton>
             </S.SearchInputContainer>
 
-            {searchResult === true && (
+            {searchResult && (
               <>
                 <S.ProductContainer>
                   <Text>아래 영양제가 맞나요?</Text>
                   <S.ProductCard>
-                    <S.ProductImage
-                      source={{
-                        uri: "https://media.istockphoto.com/id/1150593135/ko/%EB%B2%A1%ED%84%B0/%EA%B1%B4%EA%B0%95-%EB%B3%B4%EC%A1%B0-%EC%8B%9D%ED%92%88-%EB%B9%84%ED%83%80%EB%AF%BC-%ED%94%8C%EB%9E%AB-%EC%95%84%EC%9D%B4%EC%BD%98-%EC%99%84%EB%B2%BD-%ED%95%9C-%ED%94%BD%EC%85%80-%EB%AA%A8%EB%B0%94%EC%9D%BC-%EB%B0%8F-%EC%9B%B9%EC%97%90-%EC%A0%81%ED%95%A9-%ED%95%A9%EB%8B%88%EB%8B%A4.jpg?s=612x612&w=0&k=20&c=bczYHHrZUc997zTMS456mwOCOVZYF_k9lRfPIDVOYnw=",
-                      }}
-                    />
-                    <S.ProductName>{supplementName}</S.ProductName>
+                    <S.ProductImage source={{ uri: searchResult.imgUrl }} />
+                    <S.ProductName>{searchResult.supplementName}</S.ProductName>
+                    <S.ProductIngredients>
+                      {(() => {
+                        const ingredientsArray = searchResult.ingredients
+                          .split(",")
+                          .map((i) => i.trim());
+                        const shown = ingredientsArray.slice(0, 2).join(", ");
+                        return shown;
+                      })()}
+                    </S.ProductIngredients>
                   </S.ProductCard>
                 </S.ProductContainer>
 
@@ -116,7 +161,7 @@ const SupplementSearch = ({
               </>
             )}
 
-            {searchResult === false && (
+            {hasSearched && searchResult === null && (
               <S.ResultsContainer>
                 <Image
                   source={noResults}
@@ -131,6 +176,7 @@ const SupplementSearch = ({
                 <S.ResultsButton
                   onPress={() => {
                     setSearchResult(null);
+                    setHasSearched(false);
                     setSupplementInput(true);
                   }}
                 >

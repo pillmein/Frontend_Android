@@ -187,6 +187,160 @@ const surveyData = [
   },
 ];
 
+const answerCodeMap: { [key: number]: { [key: string]: string } } = {
+  1: {
+    매일: "DAILY",
+    "주 2~3회": "WEEK_2_3",
+    "주 1회": "WEEKLY",
+    "거의 하지 않음": "RARELY",
+  },
+  2: {
+    "2시간 미만": "LESS_THAN_2",
+    "2~4시간": "TWO_TO_FOUR",
+    "4~8시간": "FOUR_TO_EIGHT",
+    "8시간 이상": "MORE_THAN_EIGHT",
+  },
+  3: {
+    "4시간 미만": "LESS_THAN_OR_EQUAL_4",
+    "4~6시간": "FIVE_TO_SIX",
+    "6~8시간": "SEVEN_TO_EIGHT",
+    "8시간 이상": "MORE_THAN_EIGHT",
+  },
+  4: {
+    "1시간 미만": "LESS_THAN_1",
+    "1~3시간": "ONE_TO_THREE",
+    "3~5시간": "THREE_TO_FIVE",
+    "5시간 이상": "MORE_THAN_5",
+  },
+  5: {
+    "섭취하지 않음": "NEVER",
+    "주 1~2회": "WEEKLY_1_2",
+    "주 3~4회": "WEEKLY_3_4",
+    "매일 1회 이상": "DAILY_OR_MORE",
+  },
+  6: {
+    "하루 세 끼 규칙적으로 식사": "THREE_MEALS",
+    "하루 1-2끼 불규칙하게 식사": "IRREGULAR",
+    "끼니를 거르고 간식으로 대체": "SKIP_MEALS",
+    "배달음식이나 외식으로 끼니 해결": "DELIVERY_OR_OUTSIDE",
+  },
+  7: {
+    "전혀 마시지 않음": "NEVER",
+    "월 1-2회": "MONTHLY_1_2",
+    "주 1-2회 (월 4-8회)": "WEEKLY_1_2",
+    "주 3회 이상 (월 9회 이상)": "WEEKLY_3_PLUS",
+  },
+  8: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 느낌": "OCCASIONALLY",
+    "자주 느낌": "OFTEN",
+    "매우 자주 느낌": "VERY_OFTEN",
+  },
+  9: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 느낌": "OCCASIONALLY",
+    "자주 느낌": "OFTEN",
+    "매우 자주 느낌": "VERY_OFTEN",
+  },
+  10: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 느낌": "OCCASIONALLY",
+    "자주 느낌": "OFTEN",
+    "매우 자주 느낌": "VERY_OFTEN",
+  },
+  11: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 느낌": "OCCASIONALLY",
+    "자주 느낌": "OFTEN",
+    "매우 자주 느낌": "VERY_OFTEN",
+  },
+  12: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "1년에 1~2번": "ONCE_OR_TWICE",
+    "1년에 3~4번": "THREE_TO_FOUR",
+    "1년에 4번 이상": "FOUR_OR_MORE",
+  },
+  13: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "탄력 및 보습": "MOISTURE",
+    여드름성: "ACNE",
+    아토피: "ATOPIC",
+    색소침착: "HYPERPIGMENTATION",
+  },
+  14: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가벼운 변화가 있음": "SLIGHT_CHANGE",
+    "급격한 변화가 있음": "RAPID_CHANGE",
+    "자주 있음": "FREQUENT_CHANGE",
+  },
+  15: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    식이제한형: "DIET_RESTRICTION",
+    "단식이나 하루 한끼 식사": "FASTING",
+    "운동 중심": "EXERCISE_BASED",
+  },
+  16: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 있음": "OCCASIONALLY",
+    "자주 있음": "OFTEN",
+    "매우 자주 있음": "VERY_OFTEN",
+  },
+  17: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 느낌": "OCCASIONALLY",
+    "자주 느낌": "OFTEN",
+    "매우 자주 느낌": "VERY_OFTEN",
+  },
+  18: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 있음": "OCCASIONALLY",
+    "자주 있음": "OFTEN",
+    "매우 자주 있음": "VERY_OFTEN",
+  },
+  19: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 있음": "OCCASIONALLY",
+    "자주 있음": "OFTEN",
+    "매우 자주 있음": "VERY_OFTEN",
+  },
+  20: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 있음": "OCCASIONALLY",
+    "자주 있음": "OFTEN",
+    "매우 자주 있음": "VERY_OFTEN",
+  },
+  21: {
+    "해당 사항 없음": "NOT_APPLICABLE",
+    "가끔 있음": "OCCASIONALLY",
+    "자주 있음": "OFTEN",
+    "매우 자주 있음": "VERY_OFTEN",
+  },
+};
+
+const fieldKeyMap: { [key: number]: string } = {
+  1: "outdoorActivity",
+  2: "sedentaryHours",
+  3: "sleepDuration",
+  4: "screenTime",
+  5: "caffeineIntake",
+  6: "mealPattern",
+  7: "alcoholFrequency",
+  8: "physicalFatigue",
+  9: "mentalFatigue",
+  10: "digestionIssues",
+  11: "headacheDizziness",
+  12: "infectionFrequency",
+  13: "skinConcern",
+  14: "weightChange",
+  15: "dietMethod",
+  16: "sleepDisruption",
+  17: "seasonalDiscomfort",
+  18: "eyeFatigue",
+  19: "painFrequency",
+  20: "focusMemoryIssues",
+  21: "brittleNailsHair",
+};
+
 const SurveyView = function ({ navigation }: any) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<{
@@ -204,9 +358,29 @@ const SurveyView = function ({ navigation }: any) {
     }));
   };
 
+  const handleSubmitSurvey = () => {
+    const mappedResult: { [key: string]: string } = {};
+
+    Object.entries(selectedOptions).forEach(([idStr, answer]) => {
+      const id = Number(idStr);
+      const key = fieldKeyMap[id];
+      const code = answerCodeMap[id]?.[answer];
+
+      if (key && code) {
+        mappedResult[key] = code;
+      }
+    });
+
+    mappedResult["healthPurpose"] = subjectiveAnswer;
+
+    console.log("응답 결과:");
+    console.log(JSON.stringify(mappedResult, null, 2));
+    navigation.navigate("SurveySupplementView");
+  };
+
   const handleNext = () => {
     if (currentIndex > surveyData.length - 1) {
-      navigation.navigate("SurveySupplementView");
+      handleSubmitSurvey();
     } else {
       if (!selectedOptions[currentSurvey.id]) {
         Alert.alert("선택 오류", "항목을 선택해주세요.");

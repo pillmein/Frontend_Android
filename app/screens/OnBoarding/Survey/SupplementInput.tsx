@@ -22,10 +22,24 @@ const SupplementInput = ({
   // 입력한 정보 서버로 전송
   // TODO: API 연동
   const saveSupplement = () => {
-    console.log("서버로 전송:", { supplementName, ingredients });
+    const ingredientString = ingredients
+      .filter((item) => item.name.trim() !== "")
+      .map((item) =>
+        item.amount.trim() !== ""
+          ? `${item.name.trim()} ${item.amount.trim()}`
+          : item.name.trim()
+      )
+      .join(", ");
 
-    setConfirmedSupplements((prev: string[]) => {
-      const updatedSupplements = [...prev, supplementName];
+    const supplementData = {
+      supplementName,
+      ingredients: ingredientString,
+    };
+
+    console.log("복용 중인 영양제로 저장:", supplementData);
+
+    setConfirmedSupplements((prev: any[]) => {
+      const updatedSupplements = [...prev, supplementData];
 
       setIsConfirmed(true);
       setIsSearching(false);

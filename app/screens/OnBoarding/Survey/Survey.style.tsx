@@ -163,7 +163,7 @@ export const ProductCard = styled.View`
 `;
 export const ProductImage = styled.Image`
   width: 100px;
-  height: 100px;
+  height: 90px;
   border-radius: 10px;
   margin-bottom: 80px;
 `;
@@ -171,6 +171,11 @@ export const ProductImage = styled.Image`
 export const ProductName = styled.Text`
   font-size: 16px;
   font-weight: bold;
+`;
+
+export const ProductIngredients = styled.Text`
+  padding: 10px;
+  font-size: 10px;
 `;
 
 export const YesOrInputButton = styled.TouchableOpacity`
