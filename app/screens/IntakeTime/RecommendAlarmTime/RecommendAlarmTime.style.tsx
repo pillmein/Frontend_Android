@@ -16,6 +16,7 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
+  padding: 20px;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
@@ -23,6 +24,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const Description = styled.Text`
+  padding: 10px;
   font-size: 14px;
   text-align: center;
   color: #666;

@@ -4,16 +4,15 @@ import {
   ButtonBack,
   ButtonCommon,
   AlarmTimeCard,
+  AlarmSaveModal,
 } from "../../../components";
 import * as S from "./RecommendAlarmTime.style";
-import { TouchableOpacity } from "react-native";
 
-const RecommendAlarmTimeView = ({ navigation }: any) => {
-  const recommendedTimes = [
-    { id: 1, time: "19:00", repeatType: "매일 반복" },
-    { id: 2, time: "22:00", repeatType: "매일 반복" },
-  ];
+const RecommendAlarmTimeView = () => {
+  const recommendedTimes = [{ id: 1, time: "19:00", repeatType: "매일 반복" }];
   const [selectedAlarms, setSelectedAlarms] = useState<number[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const toggleSelect = (id: number) => {
     setSelectedAlarms((prev) =>
       prev.includes(id)
@@ -23,10 +22,8 @@ const RecommendAlarmTimeView = ({ navigation }: any) => {
   };
 
   const handleSubmit = () => {
-    if (selectedAlarms.length === 0) return;
     // TODO : 선택한 알람 시간으로 저장 & API 연동
-    // TODO : 저장 모달창
-    navigation.goBack();
+    setModalVisible(true);
   };
 
   return (
@@ -39,7 +36,6 @@ const RecommendAlarmTimeView = ({ navigation }: any) => {
       <S.SubTitle>추천 복용 시간</S.SubTitle>
       <S.Description>
         마그네슘은 1일 1~2회{"\n"}저녁 시간이나 취침 전에 복용하는 것이 좋아요!
-        {"\n"}아래 추천된 시간 중 알림을 받을 시간을 선택하세요.
       </S.Description>
 
       <S.ListContainer>
@@ -54,20 +50,12 @@ const RecommendAlarmTimeView = ({ navigation }: any) => {
           />
         ))}
       </S.ListContainer>
+      <ButtonCommon text="추천된 시간으로 알림 받기" onPress={handleSubmit} />
 
-      <TouchableOpacity
-        disabled={selectedAlarms.length === 0} // 비활성화
-        activeOpacity={selectedAlarms.length === 0 ? 1 : 0.7}
-        onPress={() => {
-          if (selectedAlarms.length === 0) return;
-          handleSubmit();
-        }}
-        style={{
-          opacity: selectedAlarms.length === 0 ? 0.3 : 1,
-        }}
-      >
-        <ButtonCommon text="선택한 시간으로 알림 받기" onPress={handleSubmit} />
-      </TouchableOpacity>
+      <AlarmSaveModal
+        visible={modalVisible}
+        onConfirm={() => setModalVisible(false)}
+      />
     </ScreenWrapper>
   );
 };

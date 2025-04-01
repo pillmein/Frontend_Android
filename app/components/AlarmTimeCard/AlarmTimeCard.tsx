@@ -43,21 +43,15 @@ const AlarmTimeCard = ({
           <S.MinuteText>{minute}</S.MinuteText>
         </S.TimeTextContainer>
 
-        <TouchableOpacity onPress={onPress}>
-          {mode === "recommend" ? (
-            isSelected ? (
-              <Feather name="check-circle" size={24} color="#a5d6a7" />
-            ) : (
-              <Feather name="circle" size={24} color="#ddd" />
-            )
-          ) : (
+        {mode === "edit" && (
+          <TouchableOpacity onPress={onPress}>
             <MaterialCommunityIcons
               name="trash-can-outline"
               size={24}
               color="#aaa"
             />
-          )}
-        </TouchableOpacity>
+          </TouchableOpacity>
+        )}
       </S.TimeRow>
     </S.CardContainer>
   );
