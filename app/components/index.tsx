@@ -7,5 +7,6 @@ export { default as Supplements } from "./Supplements/Supplements";
 export { default as DeleteSavedSupplementModal } from "./Modal/DeleteSavedSupplementModal";
 export { default as DeleteMySupplementModal } from "./Modal/DeleteMySupplementModal";
 export { default as DeleteAnalysisResultModal } from "./Modal/DeleteAnalysisResultModal";
+export { default as AlarmSaveModal } from "./Modal/AlarmSaveModal";
 export { default as AlarmTimeCard } from "./AlarmTimeCard/AlarmTimeCard";
 export { default as PageIndicator } from "./PageIndicator";
