@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ScreenWrapper } from "../../../components";
 import * as S from "./Survey.style";
 import SupplementSearch from "./SupplementSearch";
+import apiSR from "../../../api/apiSR";
 
 const SurveySupplementView = function ({ navigation }: any) {
   const [selectedOption, setSelectedOption] = useState<"yes" | "no" | null>(
@@ -18,9 +19,27 @@ const SurveySupplementView = function ({ navigation }: any) {
 
   useEffect(() => {
     if (confirmedSupplements.length > 0) {
-      setIsSearching(false); // 영양제가 추가된 후 검색 창 비활성화
+      console.log("현재 저장된 영양제 목록:", confirmedSupplements);
+      setIsSearching(false);
     }
   }, [confirmedSupplements]);
+
+  const handleSubmitSupplements = async () => {
+    try {
+      if (confirmedSupplements.length === 0) {
+        navigation.navigate("MainApp");
+        return;
+      }
+      const response = await apiSR.post("/api/v1/supplements/mylist", {
+        supplements: confirmedSupplements,
+      });
+
+      console.log("영양제 전송 성공:", response.data);
+      navigation.navigate("MainApp");
+    } catch (error: any) {
+      console.log("영양제 전송 실패:", error.response?.data || error.message);
+    }
+  };
 
   return (
     <ScreenWrapper>
@@ -64,7 +83,7 @@ const SurveySupplementView = function ({ navigation }: any) {
 
       <S.NextButton
         disabled={!isConfirmed}
-        onPress={() => navigation.navigate("MainApp")}
+        onPress={handleSubmitSupplements}
       >
         <S.NextButtonText>Pill Me In 시작</S.NextButtonText>
       </S.NextButton>

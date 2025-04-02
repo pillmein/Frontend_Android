@@ -3,6 +3,7 @@ import { Text, Image, View } from "react-native";
 import * as S from "./Survey.style";
 import noResults from "../../../assets/noResults.png";
 import SupplementInput from "./SupplementInput";
+import apiSR from "../../../api/apiSR";
 
 const SupplementSearch = ({
   setIsConfirmed,
@@ -20,34 +21,31 @@ const SupplementSearch = ({
   }>(null);
   const [supplementInput, setSupplementInput] = useState<boolean>(false);
 
-  //임시 db
-  const supplementDB = [
-    {
-      supplementName: "밀크씨슬 헬퍼",
-      ingredients:
-        "비타민 B2, 비타민 B1염산염, 비타민 B6 염산염, 산화아연, 비타민 C, 밀크씨슬추출물분말, 스테아린산마그네슘, 이산화규소, 벌꿀분말, 덱스트린, 타우린, 해조혼합분말, 혼합유당, 건조효모, 결정셀룰로스, 과일채소혼합분말, 히드록시프로필메틸셀룰로스, 치커리뿌리추출물분말, 니코틴산아미드, 황산망간, 아미노산혼합제제, 헛개나무열매추출분말, 곡물혼합분말, 표고버섯추출물분말, 엽산, 비타민B12혼합제제분말",
-      imgUrl:
-        "https://via.placeholder.com/100x100.png?text=%EB%B0%80%ED%81%AC%EC%94%A8%EC%8A%AC",
-    },
-    {
-      supplementName: "임팩타민",
-      ingredients: "비타민B군, 아연, 셀레늄",
-      imgUrl:
-        "https://via.placeholder.com/100x100.png?text=%EC%9E%84%ED%8C%A9%ED%83%80%EB%B0%8C",
-    },
-  ];
-
-  const checkSupplementInDB = (name: string) => {
-    return (
-      supplementDB.find((supplement) => supplement.supplementName === name) ||
-      null
-    );
-  };
-
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!supplementName.trim()) return;
-    const result = checkSupplementInDB(supplementName.trim());
-    setSearchResult(result);
+
+    try {
+      const response = await apiSR.post("/api/v1/supplements/search", {
+        supplementName: supplementName.trim(),
+      });
+  
+      if (response.data?.data) {
+        setSearchResult(response.data.data);
+      } else {
+        setSearchResult(null);
+      }
+    } catch (error: any) {
+      console.log("영양제 검색 실패:", error.response?.data || error.message);
+
+      const errorCode = error.response?.data?.errorCode;
+
+      if (errorCode === "NOT_FOUND_SUPPLEMENT") {
+        setSearchResult(null);
+      } else {
+        console.log("검색 오류");
+      }
+    }
+
     setHasSearched(true);
   };
 
