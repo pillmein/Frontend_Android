@@ -265,7 +265,6 @@ export const ResultsButton = styled.TouchableOpacity`
   padding: 3px;
   border-radius: 5px;
   align-items: center;
-  border: 1px #d9d9d9;
   margin-top: 10px;
 `;
 
