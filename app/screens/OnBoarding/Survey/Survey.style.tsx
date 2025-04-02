@@ -121,6 +121,7 @@ export const NextButton = styled.TouchableOpacity`
   padding: 15px;
   border-radius: 10px;
   margin-vertical: 10px;
+  margin-bottom: 50px;
 `;
 
 export const NextButtonText = styled.Text`
