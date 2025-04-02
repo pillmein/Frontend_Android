@@ -6,14 +6,14 @@ export const SupplementsContainer = styled.View`
 
 export const Header = styled.View`
   margin-top: 5px;
-  margin-bottom: 20px;
   flex-direction: row;
   position: relative;
 `;
 
 export const Title = styled.Text`
+  margin-left: 20px;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
   position: absolute;
   left: 0;
