@@ -75,10 +75,6 @@ export const Badge = styled.Text`
   margin-right: 10px;
 `;
 
-export const Amount = styled.Text`
-  font-size: 16px;
-`;
-
 export const Description = styled.Text`
   font-size: 14px;
   margin-top: 5px;
