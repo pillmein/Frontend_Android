@@ -117,7 +117,11 @@ const MySupplementsView = ({ navigation }: any) => {
             <S.alarmCount>{item.alarmCount}</S.alarmCount>
             <S.MoveToSetting>
               <TouchableOpacity
-                onPress={() => navigation.navigate("SetAlarmTimeView")}
+                onPress={() =>
+                  navigation.navigate("SetAlarmTimeView", {
+                    supplementId: item.id,
+                  })
+                }
               >
                 <AntDesign name="rightcircleo" size={24} color="#a5d6a7" />
               </TouchableOpacity>

@@ -7,44 +7,74 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AlarmModal from "../../../components/Modal/AlarmModal";
 import * as S from "./SetAlarmTime.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
+import apiSR from "../../../api/apiSR";
+import { useRoute } from "@react-navigation/native";
+
+type AlarmItem = {
+  alarmId: number;
+  time: string;
+  repeatType: string;
+};
 
 const SetAlarmTimeView = ({ navigation }: any) => {
-  // TODO : API 연동
-  const alarmsdata = {
-    supplementId: 10,
-    supplementName: "비맥스 메타",
-    alarmTimes: [
-      {
-        alarmId: 1,
-        time: "10:00",
-        repeatType: "DAILY",
-      },
-      {
-        alarmId: 2,
-        time: "18:00",
-        repeatType: "DAILY",
-      },
-    ],
-  };
+  const route = useRoute();
+  const { supplementId } = route.params as { supplementId: number };
+  const [supplementName, setSupplementName] = useState("");
+
+  // // TODO : API 연동
+  // const alarmdata = {
+  //   supplementId: 10,
+  //   supplementName: "비맥스 메타",
+  //   alarmTimes: [
+  //     {
+  //       alarmId: 1,
+  //       time: "10:00",
+  //       repeatType: "DAILY",
+  //     },
+  //     {
+  //       alarmId: 2,
+  //       time: "18:00",
+  //       repeatType: "DAILY",
+  //     },
+  //   ],
+  // };
 
   //알림 없는 경우
-  // const alarms = {
+  // const alarm = {
   //   supplementId: 10,
   //   supplementName: "비맥스 메타",
   //   alarmTimes: [],
   // };
 
-  const [alarms, setAlarms] = useState(alarmsdata.alarmTimes);
+  const [alarm, setAlarm] = useState<AlarmItem[]>([]);
   const [isPickerVisible, setPickerVisible] = useState(false);
+
+  useEffect(() => {
+    fetchAlarmData();
+  }, []);
+
+  const fetchAlarmData = async () => {
+    try {
+      const response = await apiSR.get(`/api/v1/intakes/alarm/${supplementId}`);
+      const { supplementName, alarmTimes } = response.data.data;
+
+      setSupplementName(supplementName);
+      setAlarm(alarmTimes);
+
+      console.log("알람 조회 :", response.data.data);
+    } catch (error: any) {
+      console.log("알람 조회 실패:", error.response?.data || error.message);
+    }
+  };
 
   const handleAddAlarm = () => {
     setPickerVisible(true);
   };
 
   const handleDeleteAlarm = (alarmId: number) => {
-    setAlarms((prev) => prev.filter((alarm) => alarm.alarmId !== alarmId));
+    setAlarm((prev) => prev.filter((alarm) => alarm.alarmId !== alarmId));
   };
 
   const getRepeatTypeLabel = (repeatType: string) => {
@@ -64,10 +94,10 @@ const SetAlarmTimeView = ({ navigation }: any) => {
     <ScreenWrapper>
       <S.Header>
         <ButtonBack />
-        <S.Title>{alarmsdata.supplementName}</S.Title>
+        <S.Title>{supplementName}</S.Title>
       </S.Header>
 
-      {alarmsdata.alarmTimes.length === 0 ? (
+      {alarm?.length === 0 ? (
         <>
           <S.EmptyAlarmContainer>
             <MaterialCommunityIcons name="clock" size={75} color="#a5d6a7" />
@@ -87,7 +117,7 @@ const SetAlarmTimeView = ({ navigation }: any) => {
       ) : (
         <>
           <FlatList
-            data={alarms}
+            data={alarm}
             keyExtractor={(item) => item.alarmId.toString()}
             renderItem={({ item }) => (
               <AlarmTimeCard
@@ -123,10 +153,10 @@ const SetAlarmTimeView = ({ navigation }: any) => {
                 repeatType: repeat,
               };
 
-              // 3. 기존 alarms에 추가, 시간 순으로 정렬
-              setAlarms((prev) => {
-                const updatedAlarms = [...prev, newAlarm];
-                updatedAlarms.sort((a, b) => {
+              // 3. 기존 alarm에 추가, 시간 순으로 정렬
+              setAlarm((prev) => {
+                const updatedAlarm = [...prev, newAlarm];
+                updatedAlarm.sort((a, b) => {
                   const [aHour, aMinute] = a.time.split(":").map(Number);
                   const [bHour, bMinute] = b.time.split(":").map(Number);
 
@@ -134,7 +164,7 @@ const SetAlarmTimeView = ({ navigation }: any) => {
                   return aMinute - bMinute;
                 });
 
-                return updatedAlarms;
+                return updatedAlarm;
               });
 
               console.log("저장된 시간:", formattedTime, repeat);

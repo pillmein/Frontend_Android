@@ -19,6 +19,7 @@ export const EmptyAlarmContainer = styled.View`
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+  margin-bottom: 40px;
 `;
 
 export const EmptyAlarmText = styled.Text`
