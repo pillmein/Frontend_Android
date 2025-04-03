@@ -4,12 +4,17 @@ import * as S from "./Survey.style";
 import SupplementSearch from "./SupplementSearch";
 import apiSR from "../../../api/apiSR";
 
+type SupplementItem = {
+  supplementName: string;
+  ingredients: string;
+};
+
 const SurveySupplementView = function ({ navigation }: any) {
   const [selectedOption, setSelectedOption] = useState<"yes" | "no" | null>(
     null
   );
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
-  const [confirmedSupplements, setConfirmedSupplements] = useState<string[]>(
+  const [confirmedSupplements, setConfirmedSupplements] = useState<SupplementItem[]>(
     []
   );
   const [isSearching, setIsSearching] = useState<boolean>(true);
@@ -30,11 +35,14 @@ const SurveySupplementView = function ({ navigation }: any) {
         navigation.navigate("MainApp");
         return;
       }
-      const response = await apiSR.post("/api/v1/supplements/mylist", {
-        supplements: confirmedSupplements,
-      });
+      for (const supplement of confirmedSupplements) {
+        const response = await apiSR.post("/api/v1/supplements/mylist", {
+          supplementName: supplement.supplementName,
+          ingredients: supplement.ingredients,
+        });
+        console.log("영양제 저장 성공:", response.data);
+      }
 
-      console.log("영양제 전송 성공:", response.data);
       navigation.navigate("MainApp");
     } catch (error: any) {
       console.log("영양제 전송 실패:", error.response?.data || error.message);

@@ -25,10 +25,11 @@ const SupplementSearch = ({
     if (!supplementName.trim()) return;
 
     try {
+      console.log("서버 요청 보냄:", { supplementName: supplementName.trim() });
       const response = await apiSR.post("/api/v1/supplements/search", {
         supplementName: supplementName.trim(),
       });
-  
+
       if (response.data?.data) {
         setSearchResult(response.data.data);
       } else {
@@ -59,7 +60,7 @@ const SupplementSearch = ({
 
     console.log("복용 중인 영양제로 저장:", selectedSupplement);
 
-    setConfirmedSupplements((prev: any[]) => [
+    setConfirmedSupplements((prev: any) => [
       ...prev,
       {
         supplementName: searchResult.supplementName,
