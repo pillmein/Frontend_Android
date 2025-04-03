@@ -13,38 +13,6 @@ type Supplement = {
   alarmCount: string;
 };
 
-// // 임시 데이터
-// const supplementData = [
-//   {
-//     id: 1,
-//     name: "비맥스 메타",
-//     ingredient: "비타민B1",
-//     amount: "95mg",
-//     intakeTimes: "알림이 2개 있어요!",
-//   },
-//   {
-//     id: 2,
-//     name: "제품명",
-//     ingredient: "주요 성분",
-//     amount: "용량",
-//     intakeTimes: "알림이 없어요!",
-//   },
-//   {
-//     id: 3,
-//     name: "제품명",
-//     ingredient: "주요 성분",
-//     amount: "용량",
-//     intakeTimes: "알림이 10개 있어요!",
-//   },
-//   {
-//     id: 4,
-//     name: "제품명",
-//     ingredient: "주요 성분",
-//     amount: "용량",
-//     intakeTimes: "알림이 없어요!",
-//   },
-// ];
-
 const MySupplementsView = ({ navigation }: any) => {
   const [supplements, setSupplements] = useState<Supplement[]>([]);
   const isFocused = useIsFocused();
