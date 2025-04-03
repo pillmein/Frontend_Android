@@ -22,32 +22,6 @@ const SetAlarmTimeView = ({ navigation }: any) => {
   const route = useRoute();
   const { supplementId } = route.params as { supplementId: number };
   const [supplementName, setSupplementName] = useState("");
-
-  // // TODO : API 연동
-  // const alarmdata = {
-  //   supplementId: 10,
-  //   supplementName: "비맥스 메타",
-  //   alarmTimes: [
-  //     {
-  //       alarmId: 1,
-  //       time: "10:00",
-  //       repeatType: "DAILY",
-  //     },
-  //     {
-  //       alarmId: 2,
-  //       time: "18:00",
-  //       repeatType: "DAILY",
-  //     },
-  //   ],
-  // };
-
-  //알림 없는 경우
-  // const alarm = {
-  //   supplementId: 10,
-  //   supplementName: "비맥스 메타",
-  //   alarmTimes: [],
-  // };
-
   const [alarm, setAlarm] = useState<AlarmItem[]>([]);
   const [isPickerVisible, setPickerVisible] = useState(false);
 
@@ -63,13 +37,14 @@ const SetAlarmTimeView = ({ navigation }: any) => {
       setSupplementName(supplementName);
       setAlarm(alarmTimes);
 
-      console.log("알람 조회 :", response.data.data);
+      console.log("알림 조회 :", response.data.data);
     } catch (error: any) {
-      console.log("알람 조회 실패:", error.response?.data || error.message);
+      console.log("알림 조회 실패:", error.response?.data || error.message);
     }
   };
 
   const handleAddAlarm = () => {
+    console.log("알림 추가하기");
     setPickerVisible(true);
   };
 
@@ -108,9 +83,15 @@ const SetAlarmTimeView = ({ navigation }: any) => {
           </S.EmptyAlarmContainer>
           <ButtonCommon
             text="네, 추천 받을게요!"
-            navigateTo="RecommendAlarmTimeView"
+            onPress={() => {
+              console.log("navigate params:", supplementId, supplementName);
+              navigation.navigate("RecommendAlarmTimeView", {
+                supplementId,
+                supplementName,
+              });
+            }}
           />
-          <S.Button>
+          <S.Button onPress={handleAddAlarm}>
             <S.ButtonText>아니요, 직접 설정할게요.</S.ButtonText>
           </S.Button>
         </>
@@ -132,48 +113,51 @@ const SetAlarmTimeView = ({ navigation }: any) => {
 
           <ButtonCommon
             text="복용 시간 추천 받기"
-            navigateTo="RecommendAlarmTimeView"
+            onPress={() => {
+              console.log("navigate params:", { supplementId, supplementName });
+              navigation.navigate("RecommendAlarmTimeView", {
+                supplementId,
+                supplementName,
+              });
+            }}
           />
           <S.AddAlarmButton onPress={handleAddAlarm}>
             <S.AddAlarmButtonText>알림 직접 설정하기</S.AddAlarmButtonText>
           </S.AddAlarmButton>
-          <AlarmModal
-            visible={isPickerVisible}
-            onClose={() => setPickerVisible(false)}
-            onSave={(time, repeat) => {
-              // 1. 시간 포맷을 24시간제 문자열로 변환
-              const hour = time.getHours().toString().padStart(2, "0");
-              const minute = time.getMinutes().toString().padStart(2, "0");
-              const formattedTime = `${hour}:${minute}`;
-
-              // 2. 새로운 알람 객체 생성
-              const newAlarm = {
-                alarmId: Date.now(), // 임시 고유 ID //TODO: 나중에 서버에서 알림 ID 넘겨주면 교체
-                time: formattedTime,
-                repeatType: repeat,
-              };
-
-              // 3. 기존 alarm에 추가, 시간 순으로 정렬
-              setAlarm((prev) => {
-                const updatedAlarm = [...prev, newAlarm];
-                updatedAlarm.sort((a, b) => {
-                  const [aHour, aMinute] = a.time.split(":").map(Number);
-                  const [bHour, bMinute] = b.time.split(":").map(Number);
-
-                  if (aHour !== bHour) return aHour - bHour;
-                  return aMinute - bMinute;
-                });
-
-                return updatedAlarm;
-              });
-
-              console.log("저장된 시간:", formattedTime, repeat);
-              // 4. 모달 닫기
-              setPickerVisible(false);
-            }}
-          />
         </>
       )}
+
+      <AlarmModal
+        visible={isPickerVisible}
+        onClose={() => setPickerVisible(false)}
+        onSave={async (time, repeat) => {
+          // 1. 시간 포맷을 24시간제 문자열로 변환
+          const hour = time.getHours().toString().padStart(2, "0");
+          const minute = time.getMinutes().toString().padStart(2, "0");
+          const formattedTime = `${hour}:${minute}`;
+
+          try {
+            // 2. 서버에 알림 저장 요청
+            const response = await apiSR.post("/api/v1/intakes/alarm", {
+              supplementId,
+              alarmTime: formattedTime,
+              repeatType: repeat,
+            });
+
+            // 3. 저장 성공 후 최신 알림 목록 불러오기
+            await fetchAlarmData();
+            console.log("알림 저장 후 목록 갱신 완료");
+          } catch (error: any) {
+            console.error(
+              "알림 저장 실패:",
+              error.response?.data || error.message
+            );
+          }
+
+          // 4. 모달 닫기
+          setPickerVisible(false);
+        }}
+      />
     </ScreenWrapper>
   );
 };
