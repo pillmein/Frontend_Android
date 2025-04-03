@@ -46,15 +46,10 @@ export const IngredientBadge = styled.Text`
   background-color: #a5d6a760;
   padding: 5px 10px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 10px;
 `;
 
-export const Amount = styled.Text`
-  font-size: 14px;
-  margin-left: 10px;
-`;
-
-export const IntakeTimes = styled.Text`
+export const alarmCount = styled.Text`
   background-color: #a5d6a760;
   padding: 7px 12px;
   border: #a5d6a7;
