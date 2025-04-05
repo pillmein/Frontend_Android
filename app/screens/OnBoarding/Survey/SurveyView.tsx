@@ -5,6 +5,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Header, PageIndicator } from "../../../components";
 import { Audio } from "expo-av";
 import apiSR from "../../../api/apiSR";
+import axios from "axios";
+import * as FileSystem from "expo-file-system";
+import { API_BASE_URL_SR, ACCESS_TOKEN } from "@env";
 
 const surveyData = [
   {
@@ -191,7 +194,7 @@ const surveyData = [
 
 const answerCodeMap: { [key: number]: { [key: string]: string } } = {
   1: {
-    "매일": "DAILY",
+    매일: "DAILY",
     "주 2~3회": "WEEK_2_3",
     "주 1회": "WEEKLY",
     "거의 하지 않음": "RARELY",
@@ -379,7 +382,10 @@ const SurveyView = function ({ navigation }: any) {
     mappedResult["healthPurpose"] = subjectiveAnswer;
 
     try {
-      const response = await apiSR.put("/api/v1/users/survey-answers", mappedResult);
+      const response = await apiSR.put(
+        "/api/v1/users/survey-answers",
+        mappedResult
+      );
       console.log("응답 성공:", response.data);
       navigation.navigate("SurveySupplementView");
     } catch (e: any) {
@@ -410,7 +416,7 @@ const SurveyView = function ({ navigation }: any) {
     setIsSubjectiveAnswered(newText.length > 0);
   };
 
-  const startRecording = async (): Promise<void> => {
+  const startRecording = async () => {
     try {
       if (permissionResponse?.status !== "granted") {
         console.log("Requesting permission..");
@@ -423,10 +429,10 @@ const SurveyView = function ({ navigation }: any) {
       });
 
       console.log("Starting recording..");
-      const { recording: recorded } = await Audio.Recording.createAsync(
+      const { recording } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
-      setRecording(recorded);
+      setRecording(recording);
       console.log("Recording started");
     } catch (err) {
       console.error("Failed to start recording", err);
@@ -442,7 +448,38 @@ const SurveyView = function ({ navigation }: any) {
     });
     const uri = recording?.getURI();
     console.log("Recording stopped and stored at", uri);
-    setIsSubjectiveAnswered(true);
+
+    if (!uri) return;
+
+    const formData = new FormData();
+    formData.append("voiceFile", {
+      uri,
+      name: "audio.m4a",
+      type: "audio/m4a",
+    } as any);
+
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL_SR}/api/v1/speech-to-text`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+        }
+      );
+      const recognizedText = response.data.data.recognizedText;
+      console.log("음성 인식 성공:", recognizedText);
+
+      setSubjectiveAnswer(recognizedText);
+      setIsSubjectiveAnswered(true);
+    } catch (err: any) {
+      console.error("음성 업로드 실패:", err.response?.data || err.message);
+    }
+
+    setRecording(undefined);
+    await Audio.setAudioModeAsync({ allowsRecordingIOS: false });
   };
 
   return (

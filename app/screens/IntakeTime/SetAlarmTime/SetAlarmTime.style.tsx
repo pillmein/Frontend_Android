@@ -31,6 +31,10 @@ export const EmptyAlarmText = styled.Text`
 `;
 
 export const Button = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
   background-color: #f0f0f0;
   padding: 15px;
   border-radius: 10px;
@@ -44,11 +48,21 @@ export const ButtonText = styled.Text`
 
 export const AlarmListContainer = styled.View``;
 
+export const BottomContainer = styled.View`
+  position: absolute;
+  bottom: 90px;
+  background-color: "white";
+`;
+
 export const AddAlarmButton = styled.TouchableOpacity`
-  width: 100%;
-  background-color: #eee;
-  padding: 16px;
-  border-radius: 12px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 10px;
+  margin-vertical: 10px;
   align-items: center;
 `;
 

@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AlarmModal from "../../../components/Modal/AlarmModal";
 import * as S from "./SetAlarmTime.style";
 import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import apiSR from "../../../api/apiSR";
 import { useRoute } from "@react-navigation/native";
 
@@ -82,6 +82,7 @@ const SetAlarmTimeView = ({ navigation }: any) => {
             </S.EmptyAlarmText>
           </S.EmptyAlarmContainer>
           <ButtonCommon
+            style={{ bottom: 70 }}
             text="네, 추천 받을게요!"
             onPress={() => {
               console.log("navigate params:", supplementId, supplementName);
@@ -97,24 +98,29 @@ const SetAlarmTimeView = ({ navigation }: any) => {
         </>
       ) : (
         <>
-          <FlatList
-            data={alarm}
-            keyExtractor={(item) => item.alarmId.toString()}
-            renderItem={({ item }) => (
-              <AlarmTimeCard
-                alarmTime={item.time}
-                repeatType={getRepeatTypeLabel(item.repeatType)}
-                mode="edit"
-                onPress={() => handleDeleteAlarm(item.alarmId)}
-              />
-            )}
-            showsVerticalScrollIndicator={true}
-          />
-
+          <View style={{ height: 480 }}>
+            <FlatList
+              data={alarm}
+              keyExtractor={(item) => item.alarmId.toString()}
+              renderItem={({ item }) => (
+                <AlarmTimeCard
+                  alarmTime={item.time}
+                  repeatType={getRepeatTypeLabel(item.repeatType)}
+                  mode="edit"
+                  onPress={() => handleDeleteAlarm(item.alarmId)}
+                />
+              )}
+              showsVerticalScrollIndicator={true}
+            />
+          </View>
           <ButtonCommon
+            style={{ bottom: 70 }}
             text="복용 시간 추천 받기"
             onPress={() => {
-              console.log("navigate params:", { supplementId, supplementName });
+              console.log("navigate params:", {
+                supplementId,
+                supplementName,
+              });
               navigation.navigate("RecommendAlarmTimeView", {
                 supplementId,
                 supplementName,

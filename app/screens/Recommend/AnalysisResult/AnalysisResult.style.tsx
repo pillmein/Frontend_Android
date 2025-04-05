@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 
 export const TitleContainer = styled.View`
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   align-items: center;
 `;
 
@@ -14,7 +15,7 @@ export const ResultBox = styled.View`
   background-color: #a5d6a730;
   padding: 50px;
   border-radius: 20px;
-  margin: 20px;
+  margin: 0px 20px 20px 20px;
 `;
 
 export const ResultText = styled.Text`

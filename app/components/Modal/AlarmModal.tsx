@@ -92,12 +92,6 @@ const AlarmModal = ({
 
 export default AlarmModal;
 
-const Container = styled.View`
-  flex: 1;
-  justify-content: flex-end;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
 const Content = styled.View`
   background-color: white;
   border-top-left-radius: 20px;
