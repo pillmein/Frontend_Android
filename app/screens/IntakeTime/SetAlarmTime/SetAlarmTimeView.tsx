@@ -117,10 +117,6 @@ const SetAlarmTimeView = ({ navigation }: any) => {
             style={{ bottom: 70 }}
             text="복용 시간 추천 받기"
             onPress={() => {
-              console.log("navigate params:", {
-                supplementId,
-                supplementName,
-              });
               navigation.navigate("RecommendAlarmTimeView", {
                 supplementId,
                 supplementName,
