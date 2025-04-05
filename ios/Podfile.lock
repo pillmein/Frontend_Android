@@ -233,7 +233,7 @@ PODS:
     - React-Core
   - ExpoAsset (11.0.3):
     - ExpoModulesCore
-  - ExpoFileSystem (18.0.10):
+  - ExpoFileSystem (18.0.12):
     - ExpoModulesCore
   - ExpoFont (13.0.3):
     - ExpoModulesCore
@@ -2283,7 +2283,7 @@ SPEC CHECKSUMS:
   expo-dev-menu-interface: 00dc42302a72722fdecec3fa048de84a9133bcc4
   ExpoAdapterGoogleSignIn: f5ca2b67502442629d99dbe202b6ae821d77c75d
   ExpoAsset: 715ce37a36951fee71c32773b3be50f2285e2fbe
-  ExpoFileSystem: 5df53001901f76b493bd5deb75ac506871cc9b2e
+  ExpoFileSystem: 42d363d3b96f9afab980dcef60d5657a4443c655
   ExpoFont: 38656978c2a4022fb7e0c43e4968d66340f5e2f3
   ExpoImagePicker: 24e5ba8da111f74519b1e6dc556e0b438b2b8464
   ExpoKeepAwake: 62ff49bbc3bff90d8ee28329190f9ba371bf88e7
