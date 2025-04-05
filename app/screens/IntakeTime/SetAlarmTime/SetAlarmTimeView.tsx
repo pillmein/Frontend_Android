@@ -82,6 +82,7 @@ const SetAlarmTimeView = ({ navigation }: any) => {
             </S.EmptyAlarmText>
           </S.EmptyAlarmContainer>
           <ButtonCommon
+            style={{ bottom: 70 }}
             text="네, 추천 받을게요!"
             onPress={() => {
               console.log("navigate params:", supplementId, supplementName);

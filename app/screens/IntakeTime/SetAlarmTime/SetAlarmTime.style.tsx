@@ -31,6 +31,10 @@ export const EmptyAlarmText = styled.Text`
 `;
 
 export const Button = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
   background-color: #f0f0f0;
   padding: 15px;
   border-radius: 10px;
