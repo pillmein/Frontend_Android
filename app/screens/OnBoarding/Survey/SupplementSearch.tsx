@@ -95,7 +95,7 @@ const SupplementSearch = ({
               setIsSearching(true);
             }}
           >
-            <Text>영양제 추가하기</Text>
+            <Text>➕ 영양제 추가하기</Text>
           </S.ResultsButton>
         </S.AddContainer>
       )}

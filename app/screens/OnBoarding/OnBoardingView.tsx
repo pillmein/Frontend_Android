@@ -33,7 +33,11 @@ const OnBoardingView = () => {
       <Checklist>✔ 생활습관 체크</Checklist>
       <Checklist>✔ 건강 고민 확인</Checklist>
       <Checklist>✔ 현재 복용 영양제 입력</Checklist>
-      <ButtonCommon text="설문 시작하기" navigateTo="SurveyView" />
+      <ButtonCommon
+        style={{ bottom: 230 }}
+        text="설문 시작하기"
+        navigateTo="SurveyView"
+      />
     </Container>
   );
 };

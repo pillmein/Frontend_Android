@@ -131,6 +131,7 @@ export const NextButtonText = styled.Text`
 export const SearchInputContainer = styled.View`
   flex-direction: row;
   gap: 10px;
+  margin-bottom: 30px;
 `;
 export const SearchInput = styled.TextInput`
   width: 80%;
@@ -200,6 +201,7 @@ export const ResultsContainer = styled.View`
 `;
 export const NoResultsText = styled.Text`
   text-align: center;
+  margin-bottom: 20px;
 `;
 
 export const EmptyStateContainer = styled.View`
@@ -262,11 +264,10 @@ export const ButtonText = styled.Text`
 `;
 
 export const ResultsButton = styled.TouchableOpacity`
-  background-color: #a5d6a730;
-  padding: 3px;
+  background-color: #a5d6a750;
+  padding: 8px;
   border-radius: 5px;
   align-items: center;
-  margin-top: 10px;
 `;
 
 export const AddContainer = styled.View`

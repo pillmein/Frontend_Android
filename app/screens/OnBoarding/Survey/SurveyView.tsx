@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { FlatList, Alert, TextInput, Text } from "react-native";
+import {
+  FlatList,
+  Alert,
+  TextInput,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import * as S from "./Survey.style";
 import { FontAwesome } from "@expo/vector-icons";
 import { Header, PageIndicator } from "../../../components";
@@ -358,6 +367,7 @@ const SurveyView = function ({ navigation }: any) {
 
   const [recording, setRecording] = useState<Audio.Recording>();
   const [permissionResponse, requestPermission] = Audio.usePermissions();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSelect = (option: string) => {
     setSelectedOptions((prev) => ({
@@ -459,6 +469,7 @@ const SurveyView = function ({ navigation }: any) {
     } as any);
 
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `${API_BASE_URL_SR}/api/v1/speech-to-text`,
         formData,
@@ -476,6 +487,8 @@ const SurveyView = function ({ navigation }: any) {
       setIsSubjectiveAnswered(true);
     } catch (err: any) {
       console.error("음성 업로드 실패:", err.response?.data || err.message);
+    } finally {
+      setIsLoading(false);
     }
 
     setRecording(undefined);
@@ -487,51 +500,61 @@ const SurveyView = function ({ navigation }: any) {
       <Header />
       {currentIndex > surveyData.length - 1 ? (
         <>
-          <S.SurveyContainer>
-            {/* 주관식 문항 처리 */}
-            <S.Question>
-              영양제로 어떤 부분을{"\n"}
-              <Text style={{ color: "#a5d6a7" }}>가장</Text> 보충하고
-              싶으신가요?
-            </S.Question>
-            <S.Description textColor="black">
-              영양제를 섭취하는 목적이나 해소하고 싶은 증상을{"\n"}알려주시면
-              맞춤 추천에 도움이 됩니다 😊
-            </S.Description>
-            <S.Description>
-              <Text style={{ backgroundColor: "#a5d6a760" }}>텍스트</Text> 또는{" "}
-              <Text style={{ backgroundColor: "#a5d6a760" }}>음성</Text>으로
-              편하게 말씀하세요!
-            </S.Description>
-            <>
-              <TextInput
-                placeholder="예) 요즘 스트레스가 많아서 잠을 잘 못 자고 피곤함이 계속 쌓이는 것 같아, 
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <S.SurveyContainer>
+              {/* 주관식 문항 처리 */}
+              <S.Question>
+                영양제로 어떤 부분을{"\n"}
+                <Text style={{ color: "#a5d6a7" }}>가장</Text> 보충하고
+                싶으신가요?
+              </S.Question>
+              <S.Description textColor="black">
+                영양제를 섭취하는 목적이나 해소하고 싶은 증상을{"\n"}알려주시면
+                맞춤 추천에 도움이 됩니다 😊
+              </S.Description>
+              <S.Description>
+                <Text style={{ backgroundColor: "#a5d6a760" }}>텍스트</Text>{" "}
+                또는 <Text style={{ backgroundColor: "#a5d6a760" }}>음성</Text>
+                으로 편하게 말씀하세요!
+              </S.Description>
+
+              {isLoading ? (
+                <View style={{ alignItems: "center" }}>
+                  <ActivityIndicator size="large" color="#a5d6a7" />
+                  <Text style={{ marginTop: 30 }}>음성 인식 중...</Text>
+                </View>
+              ) : (
+                <>
+                  <TextInput
+                    placeholder="예) 요즘 스트레스가 많아서 잠을 잘 못 자고 피곤함이 계속 쌓이는 것 같아, 
 면역력을 높이고 감기를 덜 걸리고 싶어"
-                value={subjectiveAnswer}
-                onChangeText={handleInputText}
-                multiline
-                style={{
-                  fontSize: 15,
-                  height: 200,
-                  borderColor: "#d9d9d9",
-                  borderRadius: 20,
-                  borderWidth: 1,
-                  padding: 20,
-                  lineHeight: 20,
-                }}
-                selectionColor={"#a5d6a7"}
-              />
-              <S.VoiceInputButton
-                onPress={recording ? stopRecording : startRecording}
-              >
-                {recording ? (
-                  <FontAwesome name="stop" size={24} color="white" />
-                ) : (
-                  <FontAwesome name="microphone" size={24} color="white" />
-                )}
-              </S.VoiceInputButton>
-            </>
-          </S.SurveyContainer>
+                    value={subjectiveAnswer}
+                    onChangeText={handleInputText}
+                    multiline
+                    style={{
+                      fontSize: 15,
+                      height: 200,
+                      borderColor: "#d9d9d9",
+                      borderRadius: 20,
+                      borderWidth: 1,
+                      padding: 20,
+                      lineHeight: 20,
+                    }}
+                    selectionColor={"#a5d6a7"}
+                  />
+                  <S.VoiceInputButton
+                    onPress={recording ? stopRecording : startRecording}
+                  >
+                    {recording ? (
+                      <FontAwesome name="stop" size={24} color="white" />
+                    ) : (
+                      <FontAwesome name="microphone" size={24} color="white" />
+                    )}
+                  </S.VoiceInputButton>
+                </>
+              )}
+            </S.SurveyContainer>
+          </TouchableWithoutFeedback>
           <S.BottomNav>
             <S.NavPrevButton disabled={currentIndex === 0} onPress={handlePrev}>
               <S.NavButtonText disabled={currentIndex === 0}>
