@@ -19,8 +19,6 @@ const SupplementInput = ({
     ]);
   };
 
-  // 입력한 정보 서버로 전송
-  // TODO: API 연동
   const saveSupplement = () => {
     const ingredientString = ingredients
       .filter((item) => item.name.trim() !== "")
