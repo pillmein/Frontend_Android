@@ -121,12 +121,13 @@ const RecommendView = ({ navigation }: any) => {
                           />
                         </S.NameContainer>
                         <S.Row>
-                          <S.Badge>{ingredients}</S.Badge>
+                          <S.Badge>주요 성분</S.Badge>
+                          <S.Description>{ingredients}</S.Description>
                         </S.Row>
-                        <S.Description>
-                          <S.BoldText>효과: </S.BoldText>
-                          {effect}
-                        </S.Description>
+                        <S.Row>
+                          <S.Badge>효과</S.Badge>
+                          <S.Description>{effect}</S.Description>
+                        </S.Row>
                       </S.InfoContainer>
                     </S.SupplementCard>
                   </TouchableOpacity>

@@ -64,11 +64,11 @@ export const SupplementName = styled.Text`
 export const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
 `;
 
 export const Badge = styled.Text`
-  background-color: #a5d6a730;
+  background-color: #a5d6a750;
   padding: 10px;
   border-radius: 15px;
   font-size: 14px;
@@ -78,8 +78,5 @@ export const Badge = styled.Text`
 export const Description = styled.Text`
   font-size: 14px;
   margin-top: 5px;
-`;
-
-export const BoldText = styled.Text`
-  font-weight: bold;
+  max-width: 80%;
 `;

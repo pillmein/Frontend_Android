@@ -55,11 +55,11 @@ export const ProgressContainer = styled.View`
   border: 1px solid #d9d9d9;
   border-radius: 15px;
   padding: 15px;
+  gap: 5px;
 `;
 
 export const ProgressTitle = styled.Text`
   font-size: 16px;
-  font-weight: bold;
   margin-bottom: 5px;
 `;
 
@@ -129,7 +129,7 @@ export const SupplementText = styled.Text`
 
 export const CategoryTag = styled.View`
   margin-left: auto;
-  background-color: #a5d6a790;
+  background-color: #a5d6a775;
   padding: 3px 8px;
   border-radius: 15px;
 `;

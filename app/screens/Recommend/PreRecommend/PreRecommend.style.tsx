@@ -18,13 +18,14 @@ export const ButtonContainer = styled.View`
   margin-top: 40px;
 `;
 export const Button = styled.TouchableOpacity`
-  background-color: #f0f0f0;
+  border: 1px solid #00000030;
   padding: 15px;
   border-radius: 10px;
   margin-vertical: 10px;
 `;
 
 export const ButtonText = styled.Text`
+  font-weight: bold;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
 `;
