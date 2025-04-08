@@ -27,6 +27,8 @@ const RecommendView = ({ navigation }: any) => {
       const response = await apiSO.post("/supplement/recommend");
       const { recSupplement1, recSupplement2, recSupplement3 } = response.data;
 
+      console.log(response.data);
+
       const supplements = [recSupplement1, recSupplement2, recSupplement3]
         .filter(Boolean)
         .map((item, idx) => ({
@@ -122,7 +124,15 @@ const RecommendView = ({ navigation }: any) => {
                         </S.NameContainer>
                         <S.Row>
                           <S.Badge>주요 성분</S.Badge>
-                          <S.Description>{ingredients}</S.Description>
+                          <S.Description>
+                            {typeof ingredients === "string"
+                              ? ingredients
+                                  .split(",")
+                                  .slice(0, 2)
+                                  .map((i) => i.trim())
+                                  .join(", ")
+                              : " "}
+                          </S.Description>
                         </S.Row>
                         <S.Row>
                           <S.Badge>효과</S.Badge>

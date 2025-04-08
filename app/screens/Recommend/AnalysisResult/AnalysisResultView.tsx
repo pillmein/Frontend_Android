@@ -50,11 +50,13 @@ const AnalysisResultView = ({ navigation }: any) => {
         </View>
       ) : (
         <>
-          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-            <S.ResultBox>
-              <S.ResultText>{analysisSummary}</S.ResultText>
-            </S.ResultBox>
-          </ScrollView>
+          <View style={{ height: 520 }}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+              <S.ResultBox>
+                <S.ResultText>{analysisSummary}</S.ResultText>
+              </S.ResultBox>
+            </ScrollView>
+          </View>
           <ButtonCommon text="영양제 추천 받기" navigateTo="RecommendView" />
         </>
       )}
