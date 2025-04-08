@@ -41,3 +41,15 @@ export const InfoList = styled.Text`
   font-size: 16px;
   padding: 5px;
 `;
+
+export const InfoListRow = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 4px;
+`;
+
+export const InfoListText = styled.Text`
+  font-size: 15px;
+  line-height: 22px;
+  flex-shrink: 1;
+`;
