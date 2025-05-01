@@ -4,6 +4,7 @@ import SavedSupplementsView from "../screens/MyPage/SavedSupplements/SavedSupple
 import SavedSupplementInfoView from "../screens/MyPage/SavedSupplements/SavedSupplementInfo/SavedSupplementInfoView";
 import MySupplementsView from "../screens/MyPage/MySupplements/MySupplementsView";
 import AddMySupplementsView from "../screens/MyPage/MySupplements/AddMySupplementsView";
+import EditSurveyAnswersView from "../screens/MyPage/EditSurveyAnswers/EditSurveyAnswersView";
 import AnalysisResultsListView from "../screens/MyPage/AnalysisResults/AnalysisResultsList/AnalysisResultsListView";
 import AnalysisResultsDetailView from "../screens/MyPage/AnalysisResults/AnalysisResultsDetail/AnalysisResultsDetailView";
 
@@ -14,6 +15,7 @@ type MyPageStackParamList = {
   SavedSupplementInfoView: undefined;
   MySupplementsView: undefined;
   AddMySupplementsView: undefined;
+  EditSurveyAnswersView: undefined;
   AnalysisResultsListView: undefined;
   AnalysisResultsDetailView: undefined;
 };
@@ -33,6 +35,10 @@ function MyPageStack() {
       <Stack.Screen
         name="AddMySupplementsView"
         component={AddMySupplementsView}
+      />
+      <Stack.Screen
+        name="EditSurveyAnswersView"
+        component={EditSurveyAnswersView}
       />
       <Stack.Screen
         name="AnalysisResultsListView"
