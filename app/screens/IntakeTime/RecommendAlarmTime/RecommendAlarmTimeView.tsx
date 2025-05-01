@@ -29,6 +29,9 @@ const RecommendAlarmTimeView = ({ route }: any) => {
 
   const fetchRecommendedTime = async () => {
     let success = false;
+    // api 호출 바로 되는 경우.. 시간 텀 두기
+    // const waitMinLoading = new Promise((resolve) => setTimeout(resolve, 1000));
+    // await waitMinLoading;
     try {
       const response = await apiSR.get(
         `/api/v1/intakes/recommended-time/${supplementId}`

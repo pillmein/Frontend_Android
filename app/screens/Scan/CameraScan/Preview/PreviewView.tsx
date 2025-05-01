@@ -5,10 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import SwiperFlatList from "react-native-swiper-flatlist";
 //import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SwiperFlatListWithGestureHandler } from "react-native-swiper-flatlist/WithGestureHandler";
+import { ACCESS_TOKEN, API_BASE_URL_SO } from "@env";
+import axios from "axios";
+import { ActivityIndicator } from "react-native";
 
 const PreviewView = ({ route, navigation }: any) => {
   const [photos, setPhotos] = useState(route.params?.capturedPhotos || []);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (photos.length > 0 && currentIndex !== photos.length - 1) {
@@ -55,15 +59,45 @@ const PreviewView = ({ route, navigation }: any) => {
     navigation.replace("CameraView", { capturedPhotos: photos });
   };
 
+  const handleAnalyze = async () => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+
+      photos.forEach((uri: string, index: number) => {
+        formData.append("images", {
+          uri,
+          type: "image/jpeg",
+          name: `photo_${index}.jpg`,
+        } as any);
+      });
+
+      const response = await axios.post(
+        `${API_BASE_URL_SO}/ocr/analyze`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+        }
+      );
+
+      console.log("분석 결과:", response.data);
+      navigation.navigate("AnalysisView", { result: response.data });
+    } catch (error: any) {
+      console.error("분석 실패:", error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <S.Container>
       <S.TopContainer>
         <S.DeleteButton onPress={deletePhoto}>
           <Ionicons name="trash-outline" size={20} color="white" />
         </S.DeleteButton>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AnalysisView", { photos })}
-        >
+        <TouchableOpacity onPress={handleAnalyze}>
           <S.AnalyzeButton>분석</S.AnalyzeButton>
         </TouchableOpacity>
       </S.TopContainer>
@@ -86,7 +120,7 @@ const PreviewView = ({ route, navigation }: any) => {
           />
         )}
       /> */}
-      {/* ✅ SwiperFlatList 적용 */}
+      {/* SwiperFlatList 적용 */}
       <S.ImageContainer>
         <SwiperFlatListWithGestureHandler
           data={photos}
@@ -111,6 +145,15 @@ const PreviewView = ({ route, navigation }: any) => {
           <S.AddButton>사진 추가</S.AddButton>
         </TouchableOpacity>
       </S.BottomContainer>
+
+      {loading && (
+        <S.LoadingOverlay>
+          <ActivityIndicator size="large" color="#a5d6a7" />
+          <S.LoadingText>
+            영양 성분 분석중...{"\n"}잠시만 기다려주세요
+          </S.LoadingText>
+        </S.LoadingOverlay>
+      )}
     </S.Container>
   );
 };

@@ -13,7 +13,7 @@ export const CardContainer = styled.View`
 `;
 
 export const RepeatTypeText = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   margin-bottom: 8px;
 `;
@@ -27,10 +27,11 @@ export const TimeRow = styled.View`
 export const TimeTextContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  gap: 10px;
 `;
 
 export const AmPmText = styled.Text`
-  font-size: 16px;
+  font-size: 18px;
   color: #000;
   margin-right: 8px;
 `;
@@ -39,7 +40,7 @@ export const HourText = styled.Text`
   font-size: 48px;
   font-weight: bold;
   color: #333;
-  background-color: #a5d6a730;
+  background-color: #a5d6a750;
   padding: 4px 8px;
   border-radius: 8px;
 `;

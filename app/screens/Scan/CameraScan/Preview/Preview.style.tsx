@@ -69,3 +69,23 @@ export const PhotoCount = styled.Text`
   color: white;
   font-size: 18px;
 `;
+
+export const LoadingOverlay = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+export const LoadingText = styled.Text`
+  margin-top: 12px;
+  font-size: 15px;
+  color: #a5d6a7;
+  text-align: center;
+  line-height: 22px;
+`;

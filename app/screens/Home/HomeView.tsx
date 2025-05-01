@@ -5,6 +5,7 @@ import * as S from "./Home.style";
 import { FontAwesome, Fontisto } from "@expo/vector-icons";
 import pill from "../../assets/headerLogo.png";
 import apiSR from "../../api/apiSR";
+import { useMemo } from "react";
 
 const HomeView = () => {
   const today = new Date();
@@ -75,15 +76,15 @@ const HomeView = () => {
   };
 
   // 주간 캘린더 데이터 생성
-  const getWeekDays = () => {
+  const weekDays = useMemo(() => {
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
+    startOfWeek.setDate(today.getDate() - startOfWeek.getDay());
+
     return Array.from({ length: 7 }, (_, i) => {
       const day = new Date(startOfWeek);
       day.setDate(startOfWeek.getDate() + i);
 
       const formattedDate = day.toISOString().split("T")[0]; // "YYYY-MM-DD"
-
       const isToday = day.toDateString() === today.toDateString();
 
       return {
@@ -93,9 +94,7 @@ const HomeView = () => {
         isTaken: intakeLog.includes(formattedDate),
       };
     });
-  };
-
-  const weekDays = getWeekDays();
+  }, [intakeLog, today]);
 
   const toggleCheck = async (name: string) => {
     const wasAllChecked = checkedSupplements.length === supplements.length;
@@ -167,7 +166,7 @@ const HomeView = () => {
         </S.MessageContainer>
       </S.ProgressContainer>
       <S.SupplementContainer>
-        <S.SectionTitle>잊지 말고 꼭 챙겨 드세요!</S.SectionTitle>
+        <S.SectionTitle>🌟 잊지 말고 꼭 챙겨 드세요!</S.SectionTitle>
       </S.SupplementContainer>
 
       {supplements.length > 0 ? (

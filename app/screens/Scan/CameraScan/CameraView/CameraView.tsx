@@ -21,7 +21,7 @@ export const CameraView = ({ route, navigation }: any) => {
     if (route.params?.capturedPhotos) {
       setCapturedPhotos(route.params.capturedPhotos);
     }
-  }, [route.params?.capturedPhotos]); // 👈 route 변경 감지하여 업데이트
+  }, [route.params?.capturedPhotos]); // route 변경 감지하여 업데이트
 
   useEffect(() => {
     (async () => {

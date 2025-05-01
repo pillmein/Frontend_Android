@@ -24,7 +24,6 @@ export const SupplementCard = styled.View`
   width: 100%;
   min-height: 180px;
   flex-direction: row;
-  padding: 3px;
   border-radius: 15px;
   margin-bottom: 15px;
   border: 1px #ddd;
@@ -51,6 +50,7 @@ export const ProductImage = styled.Image`
 export const InfoContainer = styled.View`
   flex: 1;
   gap: 2px;
+  padding-right: 5px;
 `;
 export const NameContainer = styled.View`
   margin-top: 20px;
@@ -75,8 +75,13 @@ export const Badge = styled.Text`
   margin-right: 10px;
 `;
 
+export const DescriptionFrame = styled.View`
+  justify-content: center;
+`;
+
 export const Description = styled.Text`
   font-size: 14px;
-  margin-top: 5px;
-  max-width: 80%;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  padding-right: 0px;
 `;
