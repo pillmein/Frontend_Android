@@ -63,7 +63,7 @@ export const SupplementName = styled.Text`
 
 export const Row = styled.View`
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 10px;
 `;
 
@@ -75,9 +75,13 @@ export const Badge = styled.Text`
   margin-right: 10px;
 `;
 
+export const DescriptionFrame = styled.View`
+  justify-content: center;
+`;
+
 export const Description = styled.Text`
   font-size: 14px;
   flex-shrink: 1;
   flex-wrap: wrap;
-  padding-right: 4px;
+  padding-right: 0px;
 `;

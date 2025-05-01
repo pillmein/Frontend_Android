@@ -16,20 +16,20 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  padding: 20px;
-  font-size: 20px;
+  padding: 15px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
-  margin: 16px;
+  margin-top: 50px;
 `;
 
 export const Description = styled.Text`
   padding: 10px;
-  font-size: 14px;
+  font-size: 16.5px;
   text-align: center;
   color: #666;
   margin: 0 16px 16px 16px;
-  line-height: 22px;
+  line-height: 25px;
 `;
 
 export const ListContainer = styled.View`
