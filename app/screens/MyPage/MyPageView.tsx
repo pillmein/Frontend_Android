@@ -10,11 +10,10 @@ const MyPageView = ({ navigation }: any) => {
       text: "나의 영양제 목록",
       screen: "MySupplementsView",
     },
-    { icon: "clock-outline", text: "나의 복용 알림 설정", screen: "Reminder" },
     {
       icon: "file-document-edit-outline",
       text: "설문 답변 수정",
-      screen: "EditSurvey",
+      screen: "EditSurveyAnswersView",
     },
     {
       icon: "image-search-outline",

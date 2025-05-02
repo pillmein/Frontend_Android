@@ -10,3 +10,4 @@ export { default as DeleteAnalysisResultModal } from "./Modal/DeleteAnalysisResu
 export { default as AlarmSaveModal } from "./Modal/AlarmSaveModal";
 export { default as AlarmTimeCard } from "./AlarmTimeCard/AlarmTimeCard";
 export { default as PageIndicator } from "./PageIndicator";
+export { default as EditSurveySuccessModal } from "./Modal/EditSurveySuccessModal";
