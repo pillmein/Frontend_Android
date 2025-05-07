@@ -4,33 +4,49 @@ import * as S from "../../OnBoarding/Survey/Survey.style";
 import noResults from "../../../assets/noResults.png";
 import SupplementInput from "./SupplementInput";
 import { ScreenWrapper } from "../../../components";
+import apiSR from "../../../api/apiSR";
 
 const AddMySupplementsView = ({ navigation }: any) => {
   const [inputName, setInputName] = useState(""); // 입력
   const [supplementName, setSupplementName] = useState(""); // 확정
   const [searchResult, setSearchResult] = useState<boolean | null>(null); // DB 검색
+  const [searchData, setSearchData] = useState<any | null>(null); // 검색 결과 데이터 저장
   const [isDirectInput, setIsDirectInput] = useState(false); // 직접입력 여부
   const [isComplete, setIsComplete] = useState(false); // 저장 완료 여부
 
-  // 임시 DB 검색함수
-  // TODO: 서버 연동 시 변경
-  const checkSupplementInDB = (name: string) => {
-    const supplementDB = ["밀크씨슬", "임팩타민"];
-    return supplementDB.includes(name);
-  };
-
   // 제품명 검색
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!inputName.trim()) return;
-    setSupplementName(inputName);
-    const exists = checkSupplementInDB(inputName);
-    setSearchResult(exists);
+    try {
+      console.log("서버 요청 보냄:", { supplementName: inputName });
+      const response = await apiSR.post("/api/v1/supplements/search", {
+        supplementName: inputName,
+      });
+      console.log("검색 결과: ", response.data);
+      setSearchData(response.data.data);
+      setSupplementName(response.data.supplementName);
+      setSearchResult(true);
+    } catch (error: any) {
+      console.log("영양제 검색 실패:", error.response?.data || error.message);
+      const errorCode = error.response?.data?.errorCode;
+      if (errorCode === "NOT_FOUND_SUPPLEMENT") {
+        setSearchResult(null);
+      } else {
+        console.log("검색 오류");
+      }
+    }
   };
 
-  const handleConfirmSupplement = () => {
-    console.log("저장할 영양제 데이터:", {
-      supplementName,
-    });
+  const handleConfirmSupplement = async () => {
+    try {
+      const response = await apiSR.post("/api/v1/supplements/mylist", {
+        supplementName: searchData?.supplementName,
+        ingredients: searchData?.ingredients || "",
+      });
+      console.log("영양제 저장 성공:", response.data);
+    } catch (error: any) {
+      console.log("영양제 전송 실패:", error.response?.data || error.message);
+    }
     setIsComplete(true);
   };
 
@@ -77,10 +93,25 @@ const AddMySupplementsView = ({ navigation }: any) => {
                       <S.ProductCard>
                         <S.ProductImage
                           source={{
-                            uri: "https://media.istockphoto.com/id/1150593135/ko/%EB%B2%A1%ED%84%B0/비타민-이미지.jpg",
+                            uri:
+                              searchData?.imgUrl ||
+                              "https://media.istockphoto.com/id/1150593135/ko/%EB%B2%A1%ED%84%B0/비타민-이미지.jpg",
                           }}
                         />
-                        <S.ProductName>{supplementName}</S.ProductName>
+                        <S.ProductName>
+                          {searchData.supplementName}
+                        </S.ProductName>
+                        <S.ProductIngredients>
+                          {(() => {
+                            const ingredientsArray = searchData.ingredients
+                              .split(",")
+                              .map((i: string) => i.trim());
+                            const shown = ingredientsArray
+                              .slice(0, 2)
+                              .join(", ");
+                            return shown;
+                          })()}
+                        </S.ProductIngredients>
                       </S.ProductCard>
                     </S.ProductContainer>
 
