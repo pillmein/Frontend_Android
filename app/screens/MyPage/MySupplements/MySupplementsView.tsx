@@ -9,36 +9,12 @@ import {
   DeleteMySupplementModal,
 } from "../../../components";
 import * as S from "./MySupplements.style";
-// 임시 데이터
-const supplementData = [
-  {
-    id: 1,
-    name: "비맥스 메타",
-    ingredient: "비타민B1",
-    amount: "95mg",
-  },
-  {
-    id: 2,
-    name: "제품명",
-    ingredient: "주요 성분",
-    amount: "용량",
-  },
-  {
-    id: 3,
-    name: "제품명",
-    ingredient: "주요 성분",
-    amount: "용량",
-  },
-  {
-    id: 4,
-    name: "제품명",
-    ingredient: "주요 성분",
-    amount: "용량",
-  },
-];
+import apiSR from "../../../api/apiSR";
 
 const MySupplementsView = () => {
-  const [supplements, setSupplements] = useState(supplementData);
+  const [supplements, setSupplements] = useState<
+    { id: number; supplementName: string; ingredients: string }[]
+  >([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedSupplement, setSelectedSupplement] = useState<number | null>(
     null
@@ -47,15 +23,21 @@ const MySupplementsView = () => {
 
   useEffect(() => {
     if (isFocused) {
-      fetchMySupplements();
+      fetchSupplements();
     }
   }, [isFocused]);
 
-  const fetchMySupplements = () => {
-    //TODO: API 호출 넣기
-    const updatedSupplements = supplementData;
-
-    setSupplements(updatedSupplements);
+  const fetchSupplements = async () => {
+    try {
+      const response = await apiSR.get("/api/v1/supplements/mylist");
+      const data = response.data.data;
+      setSupplements(data);
+    } catch (error: any) {
+      console.log(
+        "복용 중인 영양제 목록 조회 실패:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   // 삭제 버튼 클릭 시 모달
@@ -65,14 +47,28 @@ const MySupplementsView = () => {
   };
 
   // 모달에서 삭제 버튼 눌렀을 경우
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
+    console.log(supplements);
     if (selectedSupplement !== null) {
-      setSupplements((prev) =>
-        prev.filter((item) => item.id !== selectedSupplement)
-      );
+      try {
+        console.log("삭제할 ID:", selectedSupplement);
+        const response = await apiSR.delete(
+          `/api/v1/supplements/mylist/${selectedSupplement}`
+        );
+        console.log(response);
+        // 로컬 상태에서도 제거
+        setSupplements((prev) =>
+          prev.filter((item) => item.id !== selectedSupplement)
+        );
+        console.log(supplements);
+      } catch (error: any) {
+        console.error("삭제 실패:", error.response?.data || error.message);
+      } finally {
+        // 모달 닫기 및 초기화
+        setModalVisible(false);
+        setSelectedSupplement(null);
+      }
     }
-    setModalVisible(false);
-    setSelectedSupplement(null); // 초기화
   };
 
   return (
@@ -88,10 +84,15 @@ const MySupplementsView = () => {
         renderItem={({ item }) => (
           <S.SupplementCard>
             <S.SupplementInfo>
-              <S.SupplementName>{item.name}</S.SupplementName>
+              <S.SupplementName>{item.supplementName}</S.SupplementName>
               <S.SupplementDetail>
-                <S.IngredientBadge>{item.ingredient}</S.IngredientBadge>
-                <S.Amount>{item.amount}</S.Amount>
+                <S.IngredientBadge>
+                  {item.ingredients
+                    .split(",")
+                    .slice(0, 2)
+                    .map((i) => i.trim())
+                    .join(", ")}
+                </S.IngredientBadge>
               </S.SupplementDetail>
             </S.SupplementInfo>
             <S.DeleteButton onPress={() => handleDeletePress(item.id)}>
