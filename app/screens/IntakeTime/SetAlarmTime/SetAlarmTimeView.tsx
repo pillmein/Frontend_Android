@@ -4,6 +4,7 @@ import {
   ButtonBack,
   AlarmTimeCard,
 } from "../../../components";
+import { useIsFocused } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AlarmModal from "../../../components/Modal/AlarmModal";
 import * as S from "./SetAlarmTime.style";
@@ -24,10 +25,13 @@ const SetAlarmTimeView = ({ navigation }: any) => {
   const [supplementName, setSupplementName] = useState("");
   const [alarm, setAlarm] = useState<AlarmItem[]>([]);
   const [isPickerVisible, setPickerVisible] = useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    fetchAlarmData();
-  }, []);
+    if (isFocused) {
+      fetchAlarmData();
+    }
+  }, [isFocused]);
 
   const fetchAlarmData = async () => {
     try {
@@ -48,8 +52,14 @@ const SetAlarmTimeView = ({ navigation }: any) => {
     setPickerVisible(true);
   };
 
-  const handleDeleteAlarm = (alarmId: number) => {
-    setAlarm((prev) => prev.filter((alarm) => alarm.alarmId !== alarmId));
+  const handleDeleteAlarm = async (alarmId: number) => {
+    try {
+      await apiSR.delete(`/api/v1/intakes/alarm/${alarmId}`);
+      setAlarm((prev) => prev.filter((alarm) => alarm.alarmId !== alarmId));
+      console.log(alarm);
+    } catch (error: any) {
+      console.error("삭제 실패:", error.response?.data || error.message);
+    }
   };
 
   const getRepeatTypeLabel = (repeatType: string) => {

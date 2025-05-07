@@ -11,7 +11,7 @@ import apiSO from "../../../api/apiSO";
 import apiSR from "../../../api/apiSR";
 import { ActivityIndicator, View, Text } from "react-native";
 
-const RecommendAlarmTimeView = ({ route }: any) => {
+const RecommendAlarmTimeView = ({ navigation, route }: any) => {
   const supplementId = route?.params?.supplementId;
   const supplementName = route?.params?.supplementName;
   const [recommendedTimes, setRecommendedTimes] = useState<
@@ -93,6 +93,7 @@ const RecommendAlarmTimeView = ({ route }: any) => {
       const response = await apiSR.post("/api/v1/intakes/alarm", requestBody);
       console.log("알람 저장 성공:", response.data);
       setModalVisible(true);
+      navigation.goBack();
     } catch (error: any) {
       console.log("알람 저장 실패:", error.response?.data || error.message);
     }
