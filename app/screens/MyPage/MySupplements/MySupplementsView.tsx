@@ -47,14 +47,28 @@ const MySupplementsView = () => {
   };
 
   // 모달에서 삭제 버튼 눌렀을 경우
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
+    console.log(supplements);
     if (selectedSupplement !== null) {
-      setSupplements((prev) =>
-        prev.filter((item) => item.id !== selectedSupplement)
-      );
+      try {
+        console.log("삭제할 ID:", selectedSupplement);
+        const response = await apiSR.delete(
+          `/api/v1/supplements/mylist/${selectedSupplement}`
+        );
+        console.log(response);
+        // 로컬 상태에서도 제거
+        setSupplements((prev) =>
+          prev.filter((item) => item.id !== selectedSupplement)
+        );
+        console.log(supplements);
+      } catch (error: any) {
+        console.error("삭제 실패:", error.response?.data || error.message);
+      } finally {
+        // 모달 닫기 및 초기화
+        setModalVisible(false);
+        setSelectedSupplement(null);
+      }
     }
-    setModalVisible(false);
-    setSelectedSupplement(null); // 초기화
   };
 
   return (
