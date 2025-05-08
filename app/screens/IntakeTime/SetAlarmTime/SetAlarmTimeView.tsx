@@ -4,14 +4,13 @@ import {
   ButtonBack,
   AlarmTimeCard,
 } from "../../../components";
-import { useIsFocused } from "@react-navigation/native";
+import { useRoute, useIsFocused } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AlarmModal from "../../../components/Modal/AlarmModal";
 import * as S from "./SetAlarmTime.style";
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import apiSR from "../../../api/apiSR";
-import { useRoute } from "@react-navigation/native";
 
 type AlarmItem = {
   alarmId: number;
@@ -24,6 +23,7 @@ const SetAlarmTimeView = ({ navigation }: any) => {
   const { supplementId } = route.params as { supplementId: number };
   const [supplementName, setSupplementName] = useState("");
   const [alarm, setAlarm] = useState<AlarmItem[]>([]);
+  const [editingAlarm, setEditingAlarm] = useState<AlarmItem | null>(null);
   const [isPickerVisible, setPickerVisible] = useState(false);
   const isFocused = useIsFocused();
 
@@ -117,7 +117,11 @@ const SetAlarmTimeView = ({ navigation }: any) => {
                   alarmTime={item.time}
                   repeatType={getRepeatTypeLabel(item.repeatType)}
                   mode="edit"
-                  onPress={() => handleDeleteAlarm(item.alarmId)}
+                  onPressEdit={() => {
+                    setEditingAlarm(item);
+                    setPickerVisible(true);
+                  }}
+                  onPressDelete={() => handleDeleteAlarm(item.alarmId)}
                 />
               )}
               showsVerticalScrollIndicator={true}
@@ -141,7 +145,10 @@ const SetAlarmTimeView = ({ navigation }: any) => {
 
       <AlarmModal
         visible={isPickerVisible}
-        onClose={() => setPickerVisible(false)}
+        onClose={() => {
+          setPickerVisible(false);
+          setEditingAlarm(null);
+        }}
         onSave={async (time, repeat) => {
           // 1. 시간 포맷을 24시간제 문자열로 변환
           const hour = time.getHours().toString().padStart(2, "0");
@@ -149,13 +156,23 @@ const SetAlarmTimeView = ({ navigation }: any) => {
           const formattedTime = `${hour}:${minute}`;
 
           try {
+            if (editingAlarm) {
+              await apiSR.patch(
+                `/api/v1/intakes/alarm/${editingAlarm.alarmId}`,
+                {
+                  alarmTime: formattedTime,
+                  repeatType: repeat,
+                }
+              );
+              console.log("알림 수정 성공");
+            }
             // 2. 서버에 알림 저장 요청
-            const response = await apiSR.post("/api/v1/intakes/alarm", {
+            await apiSR.post("/api/v1/intakes/alarm", {
               supplementId,
               alarmTime: formattedTime,
               repeatType: repeat,
             });
-
+            console.log("알림 추가 성공");
             // 3. 저장 성공 후 최신 알림 목록 불러오기
             await fetchAlarmData();
             console.log("알림 저장 후 목록 갱신 완료");
@@ -165,10 +182,16 @@ const SetAlarmTimeView = ({ navigation }: any) => {
               error.response?.data || error.message
             );
           }
-
           // 4. 모달 닫기
           setPickerVisible(false);
+          setEditingAlarm(null);
         }}
+        initialTime={
+          editingAlarm
+            ? new Date(`2025-01-01T${editingAlarm.time}:00`)
+            : undefined
+        }
+        initialRepeatType={editingAlarm?.repeatType}
       />
     </ScreenWrapper>
   );

@@ -7,8 +7,8 @@ type Props = {
   alarmTime: string; // 24시간제(HH:MM)
   repeatType: string; // DAILY, EVERY_TWO_DAYS, WEEKLY
   mode: "recommend" | "edit"; // 추천 화면 / 기본설정 화면
-  isSelected?: boolean; // 추천에서 선택 상태
-  onPress: () => void; // 추천 선택 or 삭제
+  onPressEdit: () => void; // 카드 전체 클릭 시 (수정)
+  onPressDelete?: () => void; // 삭제 아이콘 클릭 시
 };
 
 const formatTimeWithAmPm = (time: string) => {
@@ -25,35 +25,37 @@ const AlarmTimeCard = ({
   alarmTime,
   repeatType,
   mode,
-  isSelected = false,
-  onPress,
+  onPressEdit,
+  onPressDelete,
 }: Props) => {
   const { ampm, hour, minute } = formatTimeWithAmPm(alarmTime);
 
   return (
-    <S.CardContainer>
-      {/* 반복 타입 예: 매일 반복 */}
-      <S.RepeatTypeText>{repeatType}</S.RepeatTypeText>
+    <TouchableOpacity onPress={onPressEdit}>
+      <S.CardContainer>
+        {/* 반복 타입 예: 매일 반복 */}
+        <S.RepeatTypeText>{repeatType}</S.RepeatTypeText>
 
-      <S.TimeRow>
-        <S.TimeTextContainer>
-          <S.AmPmText>{ampm}</S.AmPmText>
-          <S.HourText>{hour}</S.HourText>
-          <S.ColonText>:</S.ColonText>
-          <S.MinuteText>{minute}</S.MinuteText>
-        </S.TimeTextContainer>
+        <S.TimeRow>
+          <S.TimeTextContainer>
+            <S.AmPmText>{ampm}</S.AmPmText>
+            <S.HourText>{hour}</S.HourText>
+            <S.ColonText>:</S.ColonText>
+            <S.MinuteText>{minute}</S.MinuteText>
+          </S.TimeTextContainer>
 
-        {mode === "edit" && (
-          <TouchableOpacity onPress={onPress}>
-            <MaterialCommunityIcons
-              name="trash-can-outline"
-              size={24}
-              color="#aaa"
-            />
-          </TouchableOpacity>
-        )}
-      </S.TimeRow>
-    </S.CardContainer>
+          {mode === "edit" && onPressDelete && (
+            <TouchableOpacity onPress={onPressDelete}>
+              <MaterialCommunityIcons
+                name="trash-can-outline"
+                size={24}
+                color="#aaa"
+              />
+            </TouchableOpacity>
+          )}
+        </S.TimeRow>
+      </S.CardContainer>
+    </TouchableOpacity>
   );
 };
 
