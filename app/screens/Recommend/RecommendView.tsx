@@ -10,7 +10,8 @@ import apiSO from "../../api/apiSO";
 import { ActivityIndicator, View, Text, ScrollView } from "react-native";
 
 type Supplement = {
-  id: number;
+  id: number; // UI용 index
+  apiSupplementId: number; // 찜할 때 쓰는, 실제 API에 필요한 ID
   name: string;
   imageUrl: string;
   ingredients: string;
@@ -87,7 +88,8 @@ const RecommendView = ({ navigation }: any) => {
       const supplements = [recSupplement1, recSupplement2, recSupplement3]
         .filter(Boolean)
         .map((item, idx) => ({
-          id: idx + 1,
+          id: idx + 1, // UI용 index
+          apiSupplementId: item.apiSupplementId,
           name: item.name,
           imageUrl: item.imageUrl,
           ingredients: item.ingredients,
@@ -108,7 +110,26 @@ const RecommendView = ({ navigation }: any) => {
     }
   };
 
-  const toggleSave = (id: number) => {
+  const toggleSave = async (id: number) => {
+    const target = supplementData.find((s) => s.id === id);
+    if (!target) return;
+
+    const isCurrentlySaved = savedStatus[id];
+
+    if (!isCurrentlySaved) {
+      try {
+        await apiSO.post("/favorites/save_favorite", {
+          apiSupplementId: target.apiSupplementId,
+          imgUrl: target.imageUrl,
+        });
+        console.log("찜하기 성공:", target.name);
+      } catch (error: any) {
+        console.error("찜 실패:", error.response?.data || error.message);
+        return;
+      }
+    } else {
+      console.log("찜 해제");
+    }
     setSavedStatus((prev) => ({
       ...prev,
       [id]: !prev[id],
