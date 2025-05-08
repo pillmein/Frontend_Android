@@ -128,7 +128,10 @@ const RecommendView = ({ navigation }: any) => {
         return;
       }
     } else {
-      console.log("찜 해제");
+      await apiSO.delete("/favorites/delete_favorite", {
+        data: { apiSupplementId: target.apiSupplementId },
+      });
+      console.log("찜 삭제 성공:", target.name);
     }
     setSavedStatus((prev) => ({
       ...prev,
