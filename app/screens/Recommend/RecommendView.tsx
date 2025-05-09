@@ -192,7 +192,7 @@ const RecommendView = ({ navigation }: any) => {
                         <S.NameContainer>
                           <S.SupplementName>{name}</S.SupplementName>
                           <ButtonSaveSupplement
-                            id={id}
+                            apiSupplementId={id}
                             savedStatus={savedStatus}
                             toggleSave={toggleSave}
                           />
