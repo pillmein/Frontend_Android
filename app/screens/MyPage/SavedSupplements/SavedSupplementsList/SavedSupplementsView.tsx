@@ -132,7 +132,7 @@ const SavedSupplementsView = ({ navigation }: any) => {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("SavedSupplementInfoView", {
-                  supplement: item,
+                  apiSupplementId: item.apiSupplementId,
                 })
               }
             >
