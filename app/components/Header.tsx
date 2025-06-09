@@ -6,7 +6,7 @@ const Container = styled.View`
   flex-direction: row;
   justify-content: left;
   margin-top: 40px;
-  border-bottom-width: 2px #000000;
+  border-bottom-width: 0px;
 `;
 const Frame = styled.View`
   flex-direction: row;
