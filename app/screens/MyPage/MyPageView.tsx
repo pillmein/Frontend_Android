@@ -1,6 +1,7 @@
 import { ScreenWrapper } from "../../components";
 import * as S from "./MyPage.style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MyPageView = ({ navigation }: any) => {
   const menuItems = [
@@ -22,12 +23,21 @@ const MyPageView = ({ navigation }: any) => {
     },
   ] as const;
 
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("accessToken");
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "OnboardingStack" }],
+    });
+  };
+
   return (
     <ScreenWrapper>
       <S.Container>
         <S.Header>
           <S.Title>마이페이지</S.Title>
-          <S.LogoutButton>
+          <S.LogoutButton onPress={handleLogout}>
             <S.LogoutText>로그아웃</S.LogoutText>
           </S.LogoutButton>
         </S.Header>

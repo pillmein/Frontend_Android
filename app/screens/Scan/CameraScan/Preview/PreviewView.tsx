@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import * as S from "./Preview.style";
 import { Ionicons } from "@expo/vector-icons";
-import SwiperFlatList from "react-native-swiper-flatlist";
-//import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SwiperFlatListWithGestureHandler } from "react-native-swiper-flatlist/WithGestureHandler";
-import { ACCESS_TOKEN, API_BASE_URL_SO } from "@env";
+import { API_BASE_URL_SO } from "@env";
 import axios from "axios";
 import { ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PreviewView = ({ route, navigation }: any) => {
   const [photos, setPhotos] = useState(route.params?.capturedPhotos || []);
@@ -72,12 +71,15 @@ const PreviewView = ({ route, navigation }: any) => {
         } as any);
       });
 
+      const token = await AsyncStorage.getItem("accessToken");
+
       const response = await axios.post(
         `${API_BASE_URL_SO}/ocr/analyze`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -108,19 +110,6 @@ const PreviewView = ({ route, navigation }: any) => {
           resizeMode="cover"
         />
       </S.ImageContainer>
-
-      {/* <FlatList
-        data={photos}
-        horizontal
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <S.Thumbnail
-            source={{ uri: item }}
-            onPress={() => setCurrentIndex(index)}
-          />
-        )}
-      /> */}
-      {/* SwiperFlatList 적용 */}
       <S.ImageContainer>
         <SwiperFlatListWithGestureHandler
           data={photos}

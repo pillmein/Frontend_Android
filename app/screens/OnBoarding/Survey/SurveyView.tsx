@@ -15,8 +15,8 @@ import { Header, PageIndicator } from "../../../components";
 import { Audio } from "expo-av";
 import apiSR from "../../../api/apiSR";
 import axios from "axios";
-import * as FileSystem from "expo-file-system";
-import { API_BASE_URL_SR, ACCESS_TOKEN } from "@env";
+import { API_BASE_URL_SR } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const surveyData = [
   {
@@ -470,13 +470,16 @@ const SurveyView = function ({ navigation }: any) {
 
     try {
       setIsLoading(true);
+      
+      const token = await AsyncStorage.getItem("accessToken");
+      
       const response = await axios.post(
         `${API_BASE_URL_SR}/api/v1/speech-to-text`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

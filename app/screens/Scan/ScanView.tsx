@@ -1,22 +1,52 @@
 import { ScreenWrapper } from "../../components";
-import { Text } from "react-native";
+import { Alert, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import styled from "styled-components/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { API_BASE_URL_SO } from "@env";
 
 const ScanView = ({ navigation }: any) => {
   const pickImages = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      allowsMultipleSelection: true,
-      quality: 1,
-    });
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ["images"],
+    allowsMultipleSelection: true,
+    quality: 1,
+  });
 
-    if (!result.canceled) {
+  if (!result.canceled) {
+    try {
       const selectedImages = result.assets.map((asset) => asset.uri);
-      navigation.navigate("AnalysisView", { images: selectedImages });
+      const formData = new FormData();
+
+      selectedImages.forEach((uri, index) => {
+        formData.append("images", {
+          uri,
+          type: "image/jpeg",
+          name: `gallery_${index}.jpg`,
+        } as any);
+      });
+
+      const token = await AsyncStorage.getItem("accessToken");
+
+      const response = await axios.post(`${API_BASE_URL_SO}/ocr/analyze`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("갤러리 분석 결과:", response.data);
+
+      // 분석 결과 페이지로 이동
+      navigation.navigate("AnalysisView", { result: response.data });
+    } catch (error: any) {
+      console.error("갤러리 분석 실패:", error.response?.data || error.message);
+      Alert.alert("분석 실패", "이미지 분석 중 오류가 발생했어요.");
     }
-  };
+  }
+};
 
   return (
     <ScreenWrapper>

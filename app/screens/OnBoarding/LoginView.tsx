@@ -6,7 +6,9 @@ import {
   GoogleSignin,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
-import { GOOGLE_WEB_CLIENT_ID, GOOGLE_IOS_CLIENT_ID } from "@env";
+import { GOOGLE_WEB_CLIENT_ID, GOOGLE_IOS_CLIENT_ID, API_BASE_URL_SR } from "@env";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginView = ({ navigation }: any) => {
   GoogleSignin.configure({
@@ -19,7 +21,20 @@ const LoginView = ({ navigation }: any) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      const idToken = (await GoogleSignin.getTokens()).idToken;
       console.log("로그인 성공:", userInfo);
+
+      // 1. 서버에 로그인 요청
+      const response = await axios.post(`${API_BASE_URL_SR}/api/v1/auth/login`, {
+        idToken: idToken,
+        fcmToken: "temporary"
+      });
+
+      const { accessToken, refreshToken } = response.data.data;
+
+      console.log("서버 로그인 성공, 토큰 발급:", accessToken, refreshToken);
+
+      await AsyncStorage.setItem("accessToken", accessToken);
       navigation.navigate("OnBoardingView");
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
