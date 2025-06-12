@@ -5,14 +5,6 @@ import * as S from "./SavedSupplementInfoView.style";
 import apiSO from "../../../../api/apiSO";
 import { FlatList } from "react-native";
 
-//임시 데이터
-// const supplementDetail = {
-//   name: "비맥스 메타",
-//   ingredients: "아연 10mg, 비타민 B1 1.2mg",
-//   effects: ["면역력 강화", "피로 해소", "혈액순환 개선"],
-//   precautions: ["공복 섭취 피하기\n아연 과다 복용 주의\n카페인과 함께 섭취 X"],
-// };
-
 type SupplementDetail = {
   name: string;
   ingredients: string[];

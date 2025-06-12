@@ -10,8 +10,8 @@ import apiSO from "../../api/apiSO";
 import { ActivityIndicator, View, Text, ScrollView } from "react-native";
 
 type Supplement = {
-  id: number; // UI용 index
-  apiSupplementId: number; // 찜할 때 쓰는, 실제 API에 필요한 ID
+  id: number;
+  apiSupplementId: number;
   name: string;
   imageUrl: string;
   ingredients: string;
@@ -22,57 +22,6 @@ const RecommendView = ({ navigation }: any) => {
   const [supplementData, setSupplementData] = useState<Supplement[]>([]);
   const [savedStatus, setSavedStatus] = useState<Record<number, boolean>>({});
   const [loading, setLoading] = useState<boolean>(true);
-
-  // mock-up data
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     const { recSupplement1, recSupplement2, recSupplement3 } = {
-  //       recSupplement1: {
-  //         effect:
-  //           "혈액 속 지방 수치를 개선하고 혈액 흐름을 도와 스트레스성 두통이나 불면 증상 완화에 도움이 됩니다. 또한 기억력과 눈의 건조함 개선에도 효과적입니다.",
-  //         healthIssue: "혈액 순환 저하와 눈 피로, 기억력 저하",
-  //         imageUrl:
-  //           "https://shopping-phinf.pstatic.net/main_8492772/84927724574.1.jpg",
-  //         ingredients: "EPA, DHA",
-  //         name: "이너가든 초임계 알티지오메가3",
-  //       },
-  //       recSupplement2: {
-  //         effect:
-  //           "면역 기능을 강화해 잦은 피로나 감기 예방에 도움이 됩니다. 몸이 쉽게 지치거나 회복이 느릴 때 좋은 보충제입니다.",
-  //         healthIssue: "면역력 약화",
-  //         imageUrl:
-  //           "https://shopping-phinf.pstatic.net/main_8433487/84334873590.jpg",
-  //         ingredients: "인삼분말",
-  //         name: "고려태극삼분말",
-  //       },
-  //       recSupplement3: {
-  //         effect:
-  //           "신경 안정과 근육 이완에 도움이 되어 마그네슘 부족으로 생기는 피로감, 근육 경련, 스트레스 증상을 완화하는 데 효과적입니다.",
-  //         healthIssue: "마그네슘 보충",
-  //         imageUrl:
-  //           "https://shopping-phinf.pstatic.net/main_8775725/87757257521.3.jpg",
-  //         ingredients: "황산마그네슘",
-  //         name: "하이뮨 칼슘 마그네슘",
-  //       },
-  //     };
-
-  //     const supplements = [recSupplement1, recSupplement2, recSupplement3]
-  //       .filter(Boolean)
-  //       .map((item, idx) => ({
-  //         id: idx + 1,
-  //         name: item.name,
-  //         imageUrl: item.imageUrl,
-  //         ingredients: item.ingredients,
-  //         effect: item.effect,
-  //       }));
-
-  //     setSupplementData(supplements);
-
-  //     setLoading(false);
-  //   }, 2000);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   useEffect(() => {
     fetchRecommendations();
@@ -88,7 +37,7 @@ const RecommendView = ({ navigation }: any) => {
       const supplements = [recSupplement1, recSupplement2, recSupplement3]
         .filter(Boolean)
         .map((item, idx) => ({
-          id: idx + 1, // UI용 index
+          id: idx + 1,
           apiSupplementId: item.apiSupplementId,
           name: item.name,
           imageUrl: item.imageUrl,

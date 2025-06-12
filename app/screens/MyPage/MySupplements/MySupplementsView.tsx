@@ -32,6 +32,7 @@ const MySupplementsView = () => {
       const response = await apiSR.get("/api/v1/supplements/mylist");
       const data = response.data.data;
       setSupplements(data);
+      console.log("나의 영양제 목록 조회 성공");
     } catch (error: any) {
       console.log(
         "복용 중인 영양제 목록 조회 실패:",
@@ -77,30 +78,36 @@ const MySupplementsView = () => {
         <ButtonBack />
         <S.Title>나의 영양제 목록</S.Title>
       </S.Header>
-
-      <FlatList
-        data={supplements}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <S.SupplementCard>
-            <S.SupplementInfo>
-              <S.SupplementName>{item.supplementName}</S.SupplementName>
-              <S.SupplementDetail>
-                <S.IngredientBadge>
-                  {item.ingredients
-                    .split(",")
-                    .slice(0, 2)
-                    .map((i) => i.trim())
-                    .join(", ")}
-                </S.IngredientBadge>
-              </S.SupplementDetail>
-            </S.SupplementInfo>
-            <S.DeleteButton onPress={() => handleDeletePress(item.id)}>
-              <Ionicons name="trash-outline" size={22} color="#a5d6a7" />
-            </S.DeleteButton>
-          </S.SupplementCard>
-        )}
-      />
+      {supplements.length === 0 ? (
+        <S.EmptyMessageContainer>
+          <S.EmptyMessageText>
+            나의 영양제가 없어요!{"\n"}복용 중인 영양제를 추가해보세요.
+          </S.EmptyMessageText>
+        </S.EmptyMessageContainer>
+      ) : (
+        <FlatList
+          data={supplements}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <S.SupplementCard>
+              <S.SupplementInfo>
+                <S.SupplementName>{item.supplementName}</S.SupplementName>
+                <S.SupplementDetail>
+                  <S.IngredientBadge>
+                    {item.ingredients
+                      .split(",")
+                      .slice(0, 2)
+                      .map((i) => i.trim())
+                      .join(", ")}
+                  </S.IngredientBadge>
+                </S.SupplementDetail>
+              </S.SupplementInfo>
+              <S.DeleteButton onPress={() => handleDeletePress(item.id)}>
+                <Ionicons name="trash-outline" size={22} color="#a5d6a7" />
+              </S.DeleteButton>
+            </S.SupplementCard>
+          )}
+      />)}
 
       {/* 영양제 추가 */}
       <ButtonCommon
