@@ -127,14 +127,10 @@ const RecommendAlarmTimeView = ({ navigation, route }: any) => {
                 repeatType={recommendedTimes[0].repeatType}
                 mode="recommend"
                 isSelected={true}
-                onPress={() => {}}
+                onPressEdit={() => {}}
               />
             )}
           </S.ListContainer>
-          <ButtonCommon
-            text="추천된 시간으로 알림 받기"
-            onPress={handleSubmit}
-          />
         </>
       )}
 

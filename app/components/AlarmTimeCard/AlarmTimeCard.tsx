@@ -9,6 +9,7 @@ type Props = {
   mode: "recommend" | "edit"; // 추천 화면 / 기본설정 화면
   onPressEdit: () => void; // 카드 전체 클릭 시 (수정)
   onPressDelete?: () => void; // 삭제 아이콘 클릭 시
+  isSelected?: boolean;
 };
 
 const formatTimeWithAmPm = (time: string) => {
@@ -27,6 +28,7 @@ const AlarmTimeCard = ({
   mode,
   onPressEdit,
   onPressDelete,
+  isSelected = false,
 }: Props) => {
   const { ampm, hour, minute } = formatTimeWithAmPm(alarmTime);
 
