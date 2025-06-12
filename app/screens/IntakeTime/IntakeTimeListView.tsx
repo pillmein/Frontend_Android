@@ -59,44 +59,51 @@ const MySupplementsView = ({ navigation }: any) => {
     <ScreenWrapper>
       <S.Header>
         <ButtonBack />
-        <S.Title>나의 복용 알림 설정</S.Title>
+        <S.Title>⏰ 최적의 복용 시간대 추천</S.Title>
       </S.Header>
-
-      <FlatList
-        data={supplements}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <S.SupplementCard>
-            <S.SupplementInfo>
-              <S.SupplementName>{item.name}</S.SupplementName>
-              <S.SupplementDetail>
-                <S.IngredientBadge>
-                  {(() => {
-                    if (!item.ingredients) return "정보 없음";
-                    const ingredientsArray = item.ingredients
-                      .split(",")
-                      .map((i) => i.trim());
-                    const shown = ingredientsArray.slice(0, 2).join(", ");
-                    return shown;
-                  })()}
-                </S.IngredientBadge>
-              </S.SupplementDetail>
-            </S.SupplementInfo>
-            <S.alarmCount>{item.alarmCount}</S.alarmCount>
-            <S.MoveToSetting>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("SetAlarmTimeView", {
-                    supplementId: item.id,
-                  })
-                }
-              >
-                <AntDesign name="rightcircleo" size={24} color="#a5d6a7" />
-              </TouchableOpacity>
-            </S.MoveToSetting>
-          </S.SupplementCard>
-        )}
-      />
+      {supplements.length === 0 ? (
+        <S.EmptyMessageContainer>
+          <S.EmptyMessageText>
+            나의 영양제가 없어요!{"\n"}복용 중인 영양제를 추가해보세요.
+          </S.EmptyMessageText>
+        </S.EmptyMessageContainer>
+      ) : (
+        <FlatList
+          data={supplements}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <S.SupplementCard>
+              <S.SupplementInfo>
+                <S.SupplementName>{item.name}</S.SupplementName>
+                <S.SupplementDetail>
+                  <S.IngredientBadge>
+                    {(() => {
+                      if (!item.ingredients) return "정보 없음";
+                      const ingredientsArray = item.ingredients
+                        .split(",")
+                        .map((i) => i.trim());
+                      const shown = ingredientsArray.slice(0, 2).join(", ");
+                      return shown;
+                    })()}
+                  </S.IngredientBadge>
+                </S.SupplementDetail>
+              </S.SupplementInfo>
+              <S.MoveToSetting>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("RecommendAlarmTimeView", {
+                      supplementId: item.id,
+                      supplementName: item.name,
+                    })
+                  }
+                >
+                  <AntDesign name="rightcircleo" size={24} color="#a5d6a7" />
+                </TouchableOpacity>
+              </S.MoveToSetting>
+            </S.SupplementCard>
+          )}
+        />
+      )}
     </ScreenWrapper>
   );
 };

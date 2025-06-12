@@ -60,3 +60,15 @@ export const alarmCount = styled.Text`
 export const MoveToSetting = styled.TouchableOpacity`
   padding: 10px;
 `;
+
+export const EmptyMessageContainer = styled.View`
+  align-items: center;
+  padding: 40px 20px;
+`;
+
+export const EmptyMessageText = styled.Text`
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+  line-height: 24px;
+`;

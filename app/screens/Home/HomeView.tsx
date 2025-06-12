@@ -154,20 +154,31 @@ const HomeView = () => {
         />
       </S.CalendarContainer>
 
-      {/* 지난 주 복용률 UI */}
-      <S.ProgressContainer>
-        <S.ProgressTitle>지난 주 복용률</S.ProgressTitle>
-        <S.ProgressBarContainer>
-          <S.ProgressBarFilled width={summary.percentage} />
-          <S.ProgressBarRemaining width={100 - summary.percentage} />
-        </S.ProgressBarContainer>
-        <S.MessageContainer>
-          <S.MessageText>{summary.comment}</S.MessageText>
-        </S.MessageContainer>
-      </S.ProgressContainer>
-      <S.SupplementContainer>
-        <S.SectionTitle>🌟 잊지 말고 꼭 챙겨 드세요!</S.SectionTitle>
-      </S.SupplementContainer>
+      {summary && summary.percentage != null && summary.comment ? (
+        <>
+          <S.ProgressContainer>
+            <S.ProgressTitle>지난 주 복용률</S.ProgressTitle>
+            <S.ProgressBarContainer>
+              <S.ProgressBarFilled width={summary.percentage} />
+              <S.ProgressBarRemaining width={100 - summary.percentage} />
+            </S.ProgressBarContainer>
+            <S.MessageContainer>
+              <S.MessageText>{summary.comment}</S.MessageText>
+            </S.MessageContainer>
+          </S.ProgressContainer>
+
+          <S.SupplementContainer>
+            <S.SectionTitle>🌟 잊지 말고 꼭 챙겨 드세요!</S.SectionTitle>
+          </S.SupplementContainer>
+        </>
+      ) : (
+        <S.ProgressContainer>
+          <S.ProgressTitle>지난 주 복용률</S.ProgressTitle>
+          <S.NoRecordText>
+            기록이 없어요! 영양제 복용을 꾸준히 실천해보아요
+          </S.NoRecordText>
+        </S.ProgressContainer>
+      )}
 
       {supplements.length > 0 ? (
         <FlatList

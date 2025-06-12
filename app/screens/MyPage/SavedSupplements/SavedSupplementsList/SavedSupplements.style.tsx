@@ -86,3 +86,15 @@ export const Description = styled.Text`
 export const BoldText = styled.Text`
   font-weight: bold;
 `;
+
+export const EmptyMessageContainer = styled.View`
+  align-items: center;
+  padding: 40px 20px;
+`;
+
+export const EmptyMessageText = styled.Text`
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+  line-height: 24px;
+`;

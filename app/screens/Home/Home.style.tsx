@@ -152,3 +152,9 @@ export const EmptySupplementText = styled.Text`
   text-align: center;
   line-height: 24px;
 `;
+
+export const NoRecordText = styled.Text`
+  font-size: 15px;
+  color: #666;
+  text-align: center;
+`;
