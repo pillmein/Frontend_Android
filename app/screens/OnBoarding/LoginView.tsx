@@ -20,6 +20,7 @@ const LoginView = ({ navigation }: any) => {
   const signin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
+      await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
       const idToken = (await GoogleSignin.getTokens()).idToken;
       console.log("로그인 성공:", userInfo);
