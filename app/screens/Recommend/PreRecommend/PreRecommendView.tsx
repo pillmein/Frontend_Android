@@ -32,7 +32,7 @@ const PrevRecommendView = ({ navigation }: any) => {
       <S.Checklist>✔ 건강 고민 확인</S.Checklist>
       <S.Checklist>✔ 현재 복용 영양제 입력</S.Checklist>
       <S.ButtonContainer>
-        <S.Button>
+        <S.Button onPress={() => navigation.navigate("ReSurveyAnswersView")}>
           <S.ButtonText>건강설문 새로 답하기 ✏️</S.ButtonText>
         </S.Button>
         <S.Button onPress={() => navigation.navigate("AnalysisResultView")}>

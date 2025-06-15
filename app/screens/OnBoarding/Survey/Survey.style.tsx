@@ -9,7 +9,7 @@ export const SurveyContainer = styled.View`
   padding: 30px;
   gap: 20px;
   display: flex;
-  height: 650px;
+  min-height: 550px;
   flex-direction: column;
 `;
 export const Category = styled.Text`
@@ -19,7 +19,7 @@ export const Category = styled.Text`
 `;
 
 export const Question = styled.Text`
-  font-size: 18.5px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 5px;
 `;

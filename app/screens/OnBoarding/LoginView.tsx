@@ -9,13 +9,17 @@ import {
 import { GOOGLE_WEB_CLIENT_ID, GOOGLE_IOS_CLIENT_ID, API_BASE_URL_SR } from "@env";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 const LoginView = ({ navigation }: any) => {
-  GoogleSignin.configure({
-    webClientId: GOOGLE_WEB_CLIENT_ID,
-    iosClientId: GOOGLE_IOS_CLIENT_ID,
-    offlineAccess: true, // refresh token 받기
-  });
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: GOOGLE_WEB_CLIENT_ID,
+      iosClientId: GOOGLE_IOS_CLIENT_ID,
+      offlineAccess: true, // refresh token 받기
+    });
+  }, []);
 
   const signin = async () => {
     try {

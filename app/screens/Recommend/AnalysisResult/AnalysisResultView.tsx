@@ -50,7 +50,7 @@ const AnalysisResultView = ({ navigation }: any) => {
         </View>
       ) : (
         <>
-          <View style={{ height: 520 }}>
+          <View style={{ height: 450 }}>
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
               <S.ResultBox>
                 <S.ResultText>{analysisSummary}</S.ResultText>

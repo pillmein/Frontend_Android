@@ -1,11 +1,11 @@
 import styled from "styled-components/native";
 
 const Container = styled.View`
-  height: 60px;
+  height: 30px;
   background-color: white;
   flex-direction: row;
   justify-content: left;
-  margin-top: 40px;
+  margin-top: 10px;
   border-bottom-width: 0px;
 `;
 const Frame = styled.View`

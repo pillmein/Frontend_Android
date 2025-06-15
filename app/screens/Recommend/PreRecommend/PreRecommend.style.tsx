@@ -15,13 +15,13 @@ export const Checklist = styled.Text`
   margin-bottom: 5px;
 `;
 export const ButtonContainer = styled.View`
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 export const Button = styled.TouchableOpacity`
   border: 1px solid #00000030;
   padding: 15px;
   border-radius: 10px;
-  margin-vertical: 10px;
+  margin-vertical: 5px;
 `;
 
 export const ButtonText = styled.Text`
