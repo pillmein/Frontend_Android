@@ -1,3 +1,8 @@
+## 💊 Pill Me In Client
+> Client Repository for Capstone Design Project "Pill Me In"
+
+![Frame 63](https://github.com/user-attachments/assets/34eafdd9-708d-4902-b4cd-9ca414ab77ff)
+
 ## Source code에 대한 설명
 ### 폴더 구조
 
