@@ -3,6 +3,11 @@
 
 ![Frame 63](https://github.com/user-attachments/assets/34eafdd9-708d-4902-b4cd-9ca414ab77ff)
 
+## ✨ Features
+![Frame 34](https://github.com/user-attachments/assets/47977e37-a777-46c7-adf3-8f7235e686da)
+![Frame 37](https://github.com/user-attachments/assets/90a66653-6802-441a-b043-969e24cdaff2)
+![Frame 38](https://github.com/user-attachments/assets/172fd947-30f1-46d9-8cde-853ead3ccb64)
+
 ## Source code에 대한 설명
 ### 폴더 구조
 
